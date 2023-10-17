@@ -46,8 +46,6 @@ struct LandingScreen: View {
     }
 }
 
-struct LandingScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        LandingScreen()
-    }
+#Preview {
+    LandingScreen()
 }
