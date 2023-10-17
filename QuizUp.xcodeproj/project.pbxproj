@@ -82,6 +82,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5994B6DE2ADE816F003732B4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				599113322AD9D629009119B9 /* LandingScreen.swift */,
+				59EC7DB02AD6B4F5000C2CFB /* CreateAccScreen.swift */,
+				59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */,
+				59D7D0A22ADD54FC008DEAD2 /* HomeScreen.swift */,
+				59D7D0AC2ADDB8CA008DEAD2 /* SettingsScreen.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5994B6DF2ADE823E003732B4 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		59D7D0AE2ADDB8DC008DEAD2 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,11 +134,8 @@
 			children = (
 				59D7D0A52ADD5D89008DEAD2 /* Info.plist */,
 				59EC7DAE2AD6B4F5000C2CFB /* QuizUpApp.swift */,
-				599113322AD9D629009119B9 /* LandingScreen.swift */,
-				59EC7DB02AD6B4F5000C2CFB /* CreateAccScreen.swift */,
-				59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */,
-				59D7D0A22ADD54FC008DEAD2 /* HomeScreen.swift */,
-				59D7D0AC2ADDB8CA008DEAD2 /* SettingsScreen.swift */,
+				5994B6DF2ADE823E003732B4 /* Database */,
+				5994B6DE2ADE816F003732B4 /* Views */,
 				59D7D0AE2ADDB8DC008DEAD2 /* Fonts */,
 				59EC7DB22AD6B4F6000C2CFB /* Assets.xcassets */,
 				59EC7DB42AD6B4F6000C2CFB /* Preview Content */,
