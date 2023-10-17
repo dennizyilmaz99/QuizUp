@@ -31,17 +31,27 @@ struct CreateAccScreen: View {
                       .background(.white)
                       .cornerRadius(20)
                       .overlay(
-                        VStack (spacing: 50){
+                        VStack (spacing: 30){
                           TextField("Namn", text: $name)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                        .padding(10)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(Color("ButtonColor"), lineWidth: 2)
+                                        )
                             // Maybe att textFieldStyle to email
                           TextField("E-post", text: $email)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .border(Color.black)
-                            
+                                .padding(10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color("ButtonColor"), lineWidth: 2)
+                                )
                             // Maybe change to secureField instead for password
                           TextField("Lösenord", text: $password)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding(10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color("ButtonColor"), lineWidth: 2)
+                                )
                                 NavigationLink(destination: HomeScreen()) {
                                     Rectangle()
                                         .foregroundColor(.clear)
