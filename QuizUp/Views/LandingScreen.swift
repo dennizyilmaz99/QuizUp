@@ -9,7 +9,7 @@ struct LandingScreen: View {
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                    Image("Icon2").resizable().aspectRatio(contentMode: .fit).frame(width: 300, height: 300).offset(y: -250)
+                    Image("Icon5").resizable().aspectRatio(contentMode: .fit).frame(width: 300, height: 300).offset(y: -250)
                     
                     ZStack {
                         VStack(spacing: 30) {
@@ -39,7 +39,7 @@ struct LandingScreen: View {
                                         .multilineTextAlignment(.center)
                                         .foregroundColor(.white)
                         )}
-                    }
+                        }
                 }
             }
         }

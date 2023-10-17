@@ -19,7 +19,7 @@ struct HomeScreen: View {
                         Image(systemName: "chart.bar.fill").font(.title2).foregroundColor(.white)
                     }.padding()
                     Spacer()
-                    Image("Icon2").resizable().aspectRatio(contentMode: .fit).frame(width: 175, height: 175)
+                    Image("Icon5").resizable().aspectRatio(contentMode: .fit).frame(width: 175, height: 175)
                     Spacer()
                     Button(action: {
                         

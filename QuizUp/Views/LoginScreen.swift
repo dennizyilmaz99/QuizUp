@@ -30,17 +30,17 @@ struct LoginScreen: View {
                   .background(.white)
                   .cornerRadius(20)
                   .overlay(
-                    VStack (spacing: 50){
+                    VStack (spacing: 25){
                         // Maybe att textFieldStyle to email
                       TextField("E-post", text: $email)
-                            .padding(10)
+                            .padding(8)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Color("ButtonColor"), lineWidth: 2)
                             )
                         // Maybe change to secureField instead for password
-                      TextField("Lösenord", text: $password)
-                            .padding(10)
+                      SecureField("Lösenord", text: $password)
+                            .padding(8)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Color("ButtonColor"), lineWidth: 2)
@@ -58,7 +58,7 @@ struct LoginScreen: View {
                                                 .rounded)).fontWeight(.bold)
                                         .multilineTextAlignment(.center)
                                         .foregroundColor(.white)
-                                    )
+                                    ).offset(y: 30)
                             }
                             .onTapGesture {
                                 // Add terms here on navigationLink
