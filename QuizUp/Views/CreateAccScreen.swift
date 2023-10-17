@@ -34,9 +34,12 @@ struct CreateAccScreen: View {
                         VStack (spacing: 50){
                           TextField("Namn", text: $name)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                            // Maybe att textFieldStyle to email
                           TextField("E-post", text: $email)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .border(Color.black)
+                            
+                            // Maybe change to secureField instead for password
                           TextField("Lösenord", text: $password)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 NavigationLink(destination: HomeScreen()) {
@@ -46,12 +49,16 @@ struct CreateAccScreen: View {
                                         .background(Color("ButtonColor"))
                                         .cornerRadius(20)
                                         .overlay(
+                                            // Maybe add another field to repeat the password and check if it's equal
                                         Text("Skapa konto")
                                             .font(.system(size: 16, design:
                                                     .rounded)).fontWeight(.bold)
                                             .multilineTextAlignment(.center)
                                             .foregroundColor(.white)
                                         )
+                                }
+                                .onTapGesture {
+                                    // Add terms here on navigationLink
                                 }
                         }.padding())
                 }.offset(y: -50)
