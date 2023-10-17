@@ -7,5 +7,12 @@
 		<string>BungeeShade-Regular.ttf</string>
 		<string>CutneyPersonalUse-vmOvy.otf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>HomeScreenGradientLight</string>
+		<key>UIImageName</key>
+		<string>Icon2</string>
+	</dict>
 </dict>
 </plist>
