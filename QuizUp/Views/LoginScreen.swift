@@ -10,6 +10,7 @@ import SwiftUI
 struct LoginScreen: View {
     
     @ObservedObject var db: DatabaseConfig
+    @State var isNavigating: Bool = false
     @State var email = ""
     @State var password = ""
     
@@ -46,25 +47,33 @@ struct LoginScreen: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Color("ButtonColor"), lineWidth: 2)
                             )
-                            NavigationLink(destination: HomeScreen()) {
+                        NavigationLink(destination: HomeScreen(db: DatabaseConfig()), isActive: $isNavigating) {
+                                EmptyView()
+                            }
+                            Button(action: {
+                                if (!email.isEmpty && !password.isEmpty) {
+                                    _ = db.logInUser(email: email, password: password)
+                                    isNavigating = true // Enable the navigation
+                                } else {
+                                    print("Error")
+                                    isNavigating = false
+                                }
+                            }) {
                                 Rectangle()
                                     .foregroundColor(.clear)
                                     .frame(width: 270, height: 56)
                                     .background(Color("ButtonColor"))
                                     .cornerRadius(20)
+                                    .shadow(radius: 4)
                                     .overlay(
-                                        // Maybe add another field to repeat the password and check if it's equal
-                                    Text("Skapa konto")
-                                        .font(.system(size: 16, design:
-                                                .rounded)).fontWeight(.bold)
-                                        .multilineTextAlignment(.center)
-                                        .foregroundColor(.white)
-                                    ).offset(y: 30)
+                                        Text("Logga in")
+                                            .font(.system(size: 16, design: .rounded))
+                                            .fontWeight(.bold)
+                                            .multilineTextAlignment(.center)
+                                            .foregroundColor(.white)
+                                    )
                             }
-                            .onTapGesture {
-                                // Add terms here on navigationLink
-                            }
-                    }.padding())
+                    }.padding(42)).shadow(radius: 20 )
             }
         }
     }

@@ -11,12 +11,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct QuizUpApp: App {
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var users = DatabaseConfig()
     
     var body: some Scene {
         WindowGroup {
-            LandingScreen()
+            if users.isUserLoggedIn() != nil {
+                HomeScreen(db: users).environmentObject(users)
+            } else {
+                LandingScreen().environmentObject(users)
+            }
         }
     }
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		598655732ADF05D400870AF7 /* NavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = 598655722ADF05D400870AF7 /* NavigationTransitions */; };
+		598655752ADFDD6000870AF7 /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598655742ADFDD6000870AF7 /* GameScreen.swift */; };
+		598655772ADFE54600870AF7 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 598655762ADFE54600870AF7 /* FirebaseFirestoreSwift */; };
 		599113332AD9D629009119B9 /* LandingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599113322AD9D629009119B9 /* LandingScreen.swift */; };
 		59D7D0A12ADD54E8008DEAD2 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */; };
 		59D7D0A32ADD54FC008DEAD2 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D7D0A22ADD54FC008DEAD2 /* HomeScreen.swift */; };
@@ -44,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		598655742ADFDD6000870AF7 /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
 		599113322AD9D629009119B9 /* LandingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingScreen.swift; sourceTree = "<group>"; };
 		59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		59D7D0A22ADD54FC008DEAD2 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
@@ -71,7 +75,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0B3CDFA2ADEB8F0008C5CDB /* FirebaseAuth in Frameworks */,
+				598655732ADF05D400870AF7 /* NavigationTransitions in Frameworks */,
 				B0B3CDFC2ADEB8F0008C5CDB /* FirebaseFirestore in Frameworks */,
+				598655772ADFE54600870AF7 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +106,7 @@
 				59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */,
 				59D7D0A22ADD54FC008DEAD2 /* HomeScreen.swift */,
 				59D7D0AC2ADDB8CA008DEAD2 /* SettingsScreen.swift */,
+				598655742ADFDD6000870AF7 /* GameScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,6 +215,8 @@
 			packageProductDependencies = (
 				B0B3CDF92ADEB8F0008C5CDB /* FirebaseAuth */,
 				B0B3CDFB2ADEB8F0008C5CDB /* FirebaseFirestore */,
+				598655722ADF05D400870AF7 /* NavigationTransitions */,
+				598655762ADFE54600870AF7 /* FirebaseFirestoreSwift */,
 			);
 			productName = QuizUp;
 			productReference = 59EC7DAB2AD6B4F5000C2CFB /* QuizUp.app */;
@@ -283,6 +292,7 @@
 			mainGroup = 59EC7DA22AD6B4F5000C2CFB;
 			packageReferences = (
 				B0B3CDF72ADEB88E008C5CDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				598655712ADF05D400870AF7 /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */,
 			);
 			productRefGroup = 59EC7DAC2AD6B4F5000C2CFB /* Products */;
 			projectDirPath = "";
@@ -334,6 +344,7 @@
 				59D7D0A12ADD54E8008DEAD2 /* LoginScreen.swift in Sources */,
 				599113332AD9D629009119B9 /* LandingScreen.swift in Sources */,
 				B0B3CDFE2ADEBA66008C5CDB /* DatabaseConfig.swift in Sources */,
+				598655752ADFDD6000870AF7 /* GameScreen.swift in Sources */,
 				59D7D0AD2ADDB8CA008DEAD2 /* SettingsScreen.swift in Sources */,
 				59EC7DAF2AD6B4F5000C2CFB /* QuizUpApp.swift in Sources */,
 			);
@@ -671,6 +682,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		598655712ADF05D400870AF7 /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/davdroman/swiftui-navigation-transitions.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.13.1;
+			};
+		};
 		B0B3CDF72ADEB88E008C5CDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -682,6 +701,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		598655722ADF05D400870AF7 /* NavigationTransitions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 598655712ADF05D400870AF7 /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */;
+			productName = NavigationTransitions;
+		};
+		598655762ADFE54600870AF7 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0B3CDF72ADEB88E008C5CDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		B0B3CDF92ADEB8F0008C5CDB /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B0B3CDF72ADEB88E008C5CDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

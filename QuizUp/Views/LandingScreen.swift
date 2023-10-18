@@ -1,4 +1,5 @@
 import SwiftUI
+import NavigationTransitions
 
 struct LandingScreen: View {
     var body: some View {
@@ -13,12 +14,13 @@ struct LandingScreen: View {
                     
                     ZStack {
                         VStack(spacing: 30) {
-                            NavigationLink(destination: CreateAccScreen()) {
+                            NavigationLink(destination: CreateAccScreen(db: DatabaseConfig())) {
                             Rectangle()
                             .foregroundColor(.clear)
                             .frame(width: 270, height: 56)
                             .background(Color("ButtonColor"))
                             .cornerRadius(20)
+                            .shadow(radius: 15, x: -1, y: -3)
                             .overlay(
                                 Text("Skapa konto")
                                 .font(.system(size: 16, design:
@@ -26,12 +28,13 @@ struct LandingScreen: View {
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(.white)
                                             )}
-                                NavigationLink(destination: LoginScreen()) {
+                                NavigationLink(destination: LoginScreen(db: DatabaseConfig())) {
                                     Rectangle()
                                     .foregroundColor(.clear)
                                     .frame(width: 270, height: 56)
                                     .background(Color("ButtonColor"))
                                     .cornerRadius(20)
+                                    .shadow(radius: 15, x: 1, y: 3)
                                     .overlay(
                                         Text("Logga in")
                                         .font(.system(size: 16, design:
@@ -42,7 +45,7 @@ struct LandingScreen: View {
                         }
                 }
             }
-        }
+        }.accentColor(.white)
     }
 }
 
