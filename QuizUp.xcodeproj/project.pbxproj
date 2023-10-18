@@ -21,6 +21,7 @@
 		59EC7DC02AD6B4F6000C2CFB /* QuizUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC7DBF2AD6B4F6000C2CFB /* QuizUpTests.swift */; };
 		59EC7DCA2AD6B4F6000C2CFB /* QuizUpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC7DC92AD6B4F6000C2CFB /* QuizUpUITests.swift */; };
 		59EC7DCC2AD6B4F6000C2CFB /* QuizUpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC7DCB2AD6B4F6000C2CFB /* QuizUpUITestsLaunchTests.swift */; };
+		B080ED8A2ADFE06E00E33B10 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B080ED892ADFE06E00E33B10 /* UserData.swift */; };
 		B0B3CDF62ADEB866008C5CDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0B3CDF52ADEB866008C5CDB /* GoogleService-Info.plist */; };
 		B0B3CDFA2ADEB8F0008C5CDB /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B0B3CDF92ADEB8F0008C5CDB /* FirebaseAuth */; };
 		B0B3CDFC2ADEB8F0008C5CDB /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B0B3CDFB2ADEB8F0008C5CDB /* FirebaseFirestore */; };
@@ -62,6 +63,7 @@
 		59EC7DC52AD6B4F6000C2CFB /* QuizUpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizUpUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EC7DC92AD6B4F6000C2CFB /* QuizUpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizUpUITests.swift; sourceTree = "<group>"; };
 		59EC7DCB2AD6B4F6000C2CFB /* QuizUpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizUpUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B080ED892ADFE06E00E33B10 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = SOURCE_ROOT; };
 		B0B3CDF52ADEB866008C5CDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B0B3CDFD2ADEBA66008C5CDB /* DatabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseConfig.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -112,6 +114,7 @@
 			children = (
 				B0B3CDF52ADEB866008C5CDB /* GoogleService-Info.plist */,
 				B0B3CDFD2ADEBA66008C5CDB /* DatabaseConfig.swift */,
+				B080ED892ADFE06E00E33B10 /* UserData.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 			files = (
 				59EC7DB12AD6B4F5000C2CFB /* CreateAccScreen.swift in Sources */,
 				59D7D0A32ADD54FC008DEAD2 /* HomeScreen.swift in Sources */,
+				B080ED8A2ADFE06E00E33B10 /* UserData.swift in Sources */,
 				59D7D0A12ADD54E8008DEAD2 /* LoginScreen.swift in Sources */,
 				599113332AD9D629009119B9 /* LandingScreen.swift in Sources */,
 				B0B3CDFE2ADEBA66008C5CDB /* DatabaseConfig.swift in Sources */,
