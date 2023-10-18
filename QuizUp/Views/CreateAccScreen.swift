@@ -10,6 +10,7 @@ import SwiftUI
 struct CreateAccScreen: View {
     
     @ObservedObject var db: DatabaseConfig
+    @State var isNavigating: Bool = false
     @State var name: String = ""
     @State var email: String = ""
     @State var password: String = ""
@@ -62,7 +63,18 @@ struct CreateAccScreen: View {
                                       RoundedRectangle(cornerRadius: 10)
                                           .stroke(Color("ButtonColor"), lineWidth: 2)
                                   )
-                                NavigationLink(destination: HomeScreen()) {
+                            NavigationLink(destination: HomeScreen(db: DatabaseConfig()), isActive: $isNavigating) {
+                                    EmptyView()
+                                }
+                                Button(action: {
+                                    if !email.isEmpty && !password.isEmpty && !name.isEmpty && confirmPassword == password {
+                                        _ = db.registerUser(name: name, email: email, password: password)
+                                        isNavigating = true // Enable the navigation
+                                    } else {
+                                        print("Error did not go")
+                                        isNavigating = false
+                                    }
+                                }) {
                                     Rectangle()
                                         .foregroundColor(.clear)
                                         .frame(width: 270, height: 56)
@@ -70,16 +82,12 @@ struct CreateAccScreen: View {
                                         .cornerRadius(20)
                                         .shadow(radius: 4)
                                         .overlay(
-                                            // Maybe add another field to repeat the password and check if it's equal
-                                        Text("Skapa")
-                                            .font(.system(size: 16, design:
-                                                    .rounded)).fontWeight(.bold)
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(.white)
+                                            Text("Skapa")
+                                                .font(.system(size: 16, design: .rounded))
+                                                .fontWeight(.bold)
+                                                .multilineTextAlignment(.center)
+                                                .foregroundColor(.white)
                                         )
-                                }
-                                .onTapGesture {
-                                    // Add terms here on navigationLink
                                 }
                         }.padding(42)).shadow(radius: 20 )
                 }.offset(y: -50)

@@ -14,7 +14,7 @@ struct LandingScreen: View {
                     
                     ZStack {
                         VStack(spacing: 30) {
-                            NavigationLink(destination: CreateAccScreen()) {
+                            NavigationLink(destination: CreateAccScreen(db: DatabaseConfig())) {
                             Rectangle()
                             .foregroundColor(.clear)
                             .frame(width: 270, height: 56)
@@ -28,7 +28,7 @@ struct LandingScreen: View {
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(.white)
                                             )}
-                                NavigationLink(destination: LoginScreen()) {
+                                NavigationLink(destination: LoginScreen(db: DatabaseConfig())) {
                                     Rectangle()
                                     .foregroundColor(.clear)
                                     .frame(width: 270, height: 56)

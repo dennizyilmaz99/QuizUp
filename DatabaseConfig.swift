@@ -15,7 +15,7 @@ class DatabaseConfig: ObservableObject {
     @Published var currentUser: User?
     @Published var currentUserData: UserData?
     
-    func registerUser(email: String, password: String) -> Bool {
+    func registerUser(name: String, email: String, password: String) -> Bool {
         
         var success = false // A variable to keep track if create account was successfull or not
         
@@ -30,7 +30,7 @@ class DatabaseConfig: ObservableObject {
             }
             // IF SUCCESS
             if let authResult = authResult {
-                let newUserData = UserData(email: email, password: password) // newUserData receive the provided email and password
+                let newUserData = UserData(name: name, email: email, password: password) // newUserData receive the provided email and password
                 
                 do { // Store user in database
                     try self.db.collection(self.USER_DATA_COLLECTION).document(authResult.user.uid).setData(from: newUserData)
@@ -53,6 +53,7 @@ class DatabaseConfig: ObservableObject {
             // IF ERROR
             if let error = error {
                 print("Error logging in!")
+                print(error)
                 success = false
             }
             // IF SUCCESS - check if there is any data in authDataResult, if there is, it means log in was successfull.
@@ -60,13 +61,10 @@ class DatabaseConfig: ObservableObject {
                 print("Successfully logged in!")
                 success = true
             }
-            
         }
-        
         return success // return the value of success
-
     }
-    
+    /*
     func startListeningToDb() {
         
         guard let user = currentUser else {return} // checks if there even is a user, otherwise it won't listen
@@ -98,26 +96,30 @@ class DatabaseConfig: ObservableObject {
             }
         }
     }
-    
-    init() {
-        
+    */
+    func isUserLoggedIn() -> Bool {
+        var isLoggedIn = false
+
         // Setting up our listener for changes in the user's authentication
-        auth.addStateDidChangeListener{ auth, user in
-            
+        auth.addStateDidChangeListener { auth, user in
             if let user = user { // if a user exists -> add current user to 'currentUser' -> start listening
                 print("A user has logged in with email: \(user.email ?? "No Email")")
                 self.currentUser = user
-                self.startListeningToDb()
-            } else { // If user does not exist (log out) -> remove listener -> clear data
+                isLoggedIn = true
+                //self.startListeningToDb()
+            } else { // If user does not exist (logged out) -> remove listener -> clear data
                 self.dbListener?.remove()
                 self.dbListener = nil
                 self.currentUserData = nil
                 self.currentUser = nil
+                isLoggedIn = false
                 print("User has logged out!")
             }
-            
         }
+
+        return isLoggedIn
     }
+
 }
 
 
