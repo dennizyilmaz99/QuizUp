@@ -12,7 +12,7 @@ struct HomeScreen: View {
             ZStack{
             LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
                         .edgesIgnoringSafeArea(.all)
-                HStack{
+                HStack {
                     Button(action: {
                         
                     }) {
@@ -26,10 +26,25 @@ struct HomeScreen: View {
                     }) {
                         Image(systemName: "gearshape.fill").font(.title).foregroundColor(.white)
                     }.padding()
-            }.offset(y: -340)
+                }.offset(y: -340)
+                VStack {
+                    Text("Välkommen").font(.system(size: 30, design:
+                            .rounded)).fontWeight(.heavy).foregroundColor(.white)
+                }.offset(y: -230)
+                VStack {
+                    NavigationLink(destination: GameScreen()) {
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: 300, height: 150)
+                            .background(Color("ButtonColor"))
+                            .cornerRadius(20)
+                            .shadow(radius: 4)
+                            .overlay(
+                                Text("Spela").font(.system(size: 30, design:
+                                    .rounded)).fontWeight(.heavy).foregroundColor(.white)
+                    )}}
         }.navigationBarBackButtonHidden(true)
-    }
-}
+    }}
 
 #Preview {
     HomeScreen()

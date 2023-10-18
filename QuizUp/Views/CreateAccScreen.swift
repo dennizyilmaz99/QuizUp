@@ -40,9 +40,7 @@ struct CreateAccScreen: View {
                                         .background(
                                             RoundedRectangle(cornerRadius: 10)
                                                 .stroke(Color("ButtonColor"), lineWidth: 2)
-                                                .shadow(color: .black, radius: 20)
-                                                .background(.black)
-                                                )
+                                                .shadow(color: .black, radius: 20))
                             // Maybe att textFieldStyle to email
                           TextField("E-post", text: $email)
                                 .padding(8)
@@ -72,7 +70,7 @@ struct CreateAccScreen: View {
                                         .shadow(radius: 4)
                                         .overlay(
                                             // Maybe add another field to repeat the password and check if it's equal
-                                        Text("Skapa konto")
+                                        Text("Skapa")
                                             .font(.system(size: 16, design:
                                                     .rounded)).fontWeight(.bold)
                                             .multilineTextAlignment(.center)

@@ -1,4 +1,5 @@
 import SwiftUI
+import NavigationTransitions
 
 struct LandingScreen: View {
     var body: some View {
@@ -19,6 +20,7 @@ struct LandingScreen: View {
                             .frame(width: 270, height: 56)
                             .background(Color("ButtonColor"))
                             .cornerRadius(20)
+                            .shadow(radius: 15, x: -1, y: -3)
                             .overlay(
                                 Text("Skapa konto")
                                 .font(.system(size: 16, design:
@@ -32,6 +34,7 @@ struct LandingScreen: View {
                                     .frame(width: 270, height: 56)
                                     .background(Color("ButtonColor"))
                                     .cornerRadius(20)
+                                    .shadow(radius: 15, x: 1, y: 3)
                                     .overlay(
                                         Text("Logga in")
                                         .font(.system(size: 16, design:
@@ -42,7 +45,7 @@ struct LandingScreen: View {
                         }
                 }
             }
-        }
+        }.accentColor(.white)
     }
 }
 

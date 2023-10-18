@@ -51,9 +51,10 @@ struct LoginScreen: View {
                                     .frame(width: 270, height: 56)
                                     .background(Color("ButtonColor"))
                                     .cornerRadius(20)
+                                    .shadow(radius: 4)
                                     .overlay(
                                         // Maybe add another field to repeat the password and check if it's equal
-                                    Text("Skapa konto")
+                                    Text("Logga in")
                                         .font(.system(size: 16, design:
                                                 .rounded)).fontWeight(.bold)
                                         .multilineTextAlignment(.center)
@@ -63,7 +64,7 @@ struct LoginScreen: View {
                             .onTapGesture {
                                 // Add terms here on navigationLink
                             }
-                    }.padding())
+                    }.padding(42)).shadow(radius: 20 )
             }
         }
     }
