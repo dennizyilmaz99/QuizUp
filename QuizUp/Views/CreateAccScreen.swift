@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CreateAccScreen: View {
     
+    @ObservedObject var db: DatabaseConfig
     @State var name: String = ""
     @State var email: String = ""
     @State var password: String = ""
@@ -77,5 +78,5 @@ struct CreateAccScreen: View {
 }
 
 #Preview {
-    CreateAccScreen()
+    CreateAccScreen(db: DatabaseConfig())
 }

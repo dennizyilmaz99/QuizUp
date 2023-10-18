@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginScreen: View {
     
+    @ObservedObject var db: DatabaseConfig
     @State var email = ""
     @State var password = ""
     
@@ -70,5 +71,5 @@ struct LoginScreen: View {
 }
 
 #Preview {
-    LoginScreen()
+    LoginScreen(db: DatabaseConfig())
 }
