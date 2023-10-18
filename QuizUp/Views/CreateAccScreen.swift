@@ -13,6 +13,9 @@ struct CreateAccScreen: View {
     @State var name: String = ""
     @State var email: String = ""
     @State var password: String = ""
+    @State var confirmPassword: String = ""
+    private let shadowColor: Color = .init(red: 197/255, green: 197/255, blue: 197/255)
+    private let baseColor: Color = .init(red: 232/255, green: 232/255, blue: 232/255)
     
     var body: some View {
             ZStack{
@@ -34,31 +37,40 @@ struct CreateAccScreen: View {
                       .overlay(
                         VStack (spacing: 30){
                           TextField("Namn", text: $name)
-                                        .padding(10)
+                                        .padding(8)
                                         .background(
                                             RoundedRectangle(cornerRadius: 10)
                                                 .stroke(Color("ButtonColor"), lineWidth: 2)
-                                        )
+                                                .shadow(color: .black, radius: 20)
+                                                .background(.black)
+                                                )
                             // Maybe att textFieldStyle to email
                           TextField("E-post", text: $email)
-                                .padding(10)
+                                .padding(8)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10)
                                         .stroke(Color("ButtonColor"), lineWidth: 2)
                                 )
                             // Maybe change to secureField instead for password
-                          TextField("Lösenord", text: $password)
-                                .padding(10)
+                          SecureField("Lösenord", text: $password)
+                                .padding(8)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10)
                                         .stroke(Color("ButtonColor"), lineWidth: 2)
                                 )
+                            SecureField("Bekräfta lösenord", text: $confirmPassword)
+                                  .padding(8)
+                                  .background(
+                                      RoundedRectangle(cornerRadius: 10)
+                                          .stroke(Color("ButtonColor"), lineWidth: 2)
+                                  )
                                 NavigationLink(destination: HomeScreen()) {
                                     Rectangle()
                                         .foregroundColor(.clear)
                                         .frame(width: 270, height: 56)
                                         .background(Color("ButtonColor"))
                                         .cornerRadius(20)
+                                        .shadow(radius: 4)
                                         .overlay(
                                             // Maybe add another field to repeat the password and check if it's equal
                                         Text("Skapa konto")
@@ -71,7 +83,7 @@ struct CreateAccScreen: View {
                                 .onTapGesture {
                                     // Add terms here on navigationLink
                                 }
-                        }.padding())
+                        }.padding(42)).shadow(radius: 20 )
                 }.offset(y: -50)
             }
     }
