@@ -1,5 +1,5 @@
 import SwiftUI
-import NavigationTransitions
+//import NavigationTransitions
 
 struct LandingScreen: View {
     var body: some View {
