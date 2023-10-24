@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		596FF2142AE6AA7A0002C4B4 /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FF2132AE6AA7A0002C4B4 /* ProfileScreen.swift */; };
 		598655752ADFDD6000870AF7 /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598655742ADFDD6000870AF7 /* GameScreen.swift */; };
 		599113332AD9D629009119B9 /* LandingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599113322AD9D629009119B9 /* LandingScreen.swift */; };
 		59D7D0A12ADD54E8008DEAD2 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		596FF2132AE6AA7A0002C4B4 /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		598655742ADFDD6000870AF7 /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
 		599113322AD9D629009119B9 /* LandingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingScreen.swift; sourceTree = "<group>"; };
 		59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				59D7D0AC2ADDB8CA008DEAD2 /* SettingsScreen.swift */,
 				598655742ADFDD6000870AF7 /* GameScreen.swift */,
 				B03A341D2AE57C4300EDFD91 /* PopUpView.swift */,
+				596FF2132AE6AA7A0002C4B4 /* ProfileScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				59D7D0A12ADD54E8008DEAD2 /* LoginScreen.swift in Sources */,
 				599113332AD9D629009119B9 /* LandingScreen.swift in Sources */,
 				B0B3CDFE2ADEBA66008C5CDB /* DatabaseConfig.swift in Sources */,
+				596FF2142AE6AA7A0002C4B4 /* ProfileScreen.swift in Sources */,
 				598655752ADFDD6000870AF7 /* GameScreen.swift in Sources */,
 				B03A341C2AE56FFF00EDFD91 /* CategoriesData.swift in Sources */,
 				59D7D0AD2ADDB8CA008DEAD2 /* SettingsScreen.swift in Sources */,

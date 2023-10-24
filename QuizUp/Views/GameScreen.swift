@@ -16,12 +16,6 @@ struct GameScreen: View {
     var body: some View {
         NavigationView{
             ZStack{
-                Image("NewBgQuizUp")
-                    .resizable()
-                    .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                
                 Text("Välj en kategori")
                     .font(.system(size: 36, design:
                             .rounded)).fontWeight(.bold)
@@ -49,7 +43,8 @@ struct GameScreen: View {
                 if showMyPopup {
                     PopUpView(showMyPopup: $showMyPopup)
                }
-            }
+            }.frame(maxWidth: .infinity, maxHeight: .infinity).background(LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all))
         }
     }
     
