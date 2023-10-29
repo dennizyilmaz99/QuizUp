@@ -12,9 +12,10 @@ struct HomeScreen: View {
     @ObservedObject var db: DatabaseConfig
     @State var isNavigating: Bool = false
     var body: some View {
+        NavigationView{
             ZStack{
-            LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                        .edgesIgnoringSafeArea(.all)
+                LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .edgesIgnoringSafeArea(.all)
                 HStack {
                     Button(action: {
                         
@@ -25,7 +26,7 @@ struct HomeScreen: View {
                     Image("Icon5").resizable().aspectRatio(contentMode: .fit).frame(width: 175, height: 175)
                     Spacer()
                     Button(action: {
-                        
+                        isNavigating = true
                     }) {
                         Image(systemName: "gearshape.fill").font(.title).foregroundColor(.white)
                     }.padding()
@@ -56,8 +57,9 @@ struct HomeScreen: View {
                             )
                     }
                 }
-        }
-    }}
+            }
+        }}
+}
 
 #Preview {
     HomeScreen(db: DatabaseConfig())

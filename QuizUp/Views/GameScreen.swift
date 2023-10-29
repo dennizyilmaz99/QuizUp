@@ -1,8 +1,14 @@
 import SwiftUI
+import Alamofire
 
 struct GameScreen: View {
     
     @State var showMyPopup = false
+    //@State private var questions: [Question] = []
+    @State private var selectedCategory: String = "" // Lagra dne valda kategorin
+  //  @State private var selectedDifficulty: String = "" // Lagra den valda svårighetsgraden
+   
+    
     
     // An array of categories a user can select between. Every category is a object of CategoriesData
     let categories: [CategoriesData] = 
@@ -35,9 +41,11 @@ struct GameScreen: View {
                         // To render all categories in our array
                         ForEach(categories) { category in
                             Button(action: { // Creates a button for each category
+                              //  self.selectedCategory = category.categorieName
                                 self.showMyPopup = true
-                                   
+                                self.selectedCategory = category.categorieName
                             }) { // Creates an instance of ButtonView and passes categorieName as a parameter
+                                
                                 ButtonView(categorieName: category.categorieName)
                             }
                         }
@@ -47,7 +55,7 @@ struct GameScreen: View {
                     .offset(y: 50)
                 
                 if showMyPopup {
-                    PopUpView(showMyPopup: $showMyPopup)
+                   PopUpView(showMyPopup: $showMyPopup, selectedCategory: $selectedCategory)
                }
             }
         }
@@ -55,7 +63,7 @@ struct GameScreen: View {
     
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-                GameScreen()
+            GameScreen()
         }
     }
     
@@ -82,3 +90,4 @@ struct GameScreen: View {
         }
     }
 }
+
