@@ -17,6 +17,8 @@ struct CreateAccScreen: View {
     @State var confirmPassword: String = ""
     private let shadowColor: Color = .init(red: 197/255, green: 197/255, blue: 197/255)
     private let baseColor: Color = .init(red: 232/255, green: 232/255, blue: 232/255)
+  
+
     
     var body: some View {
             ZStack{
@@ -63,7 +65,7 @@ struct CreateAccScreen: View {
                                       RoundedRectangle(cornerRadius: 10)
                                           .stroke(Color("ButtonColor"), lineWidth: 2)
                                   )
-                            NavigationLink(destination: HomeScreen(db: DatabaseConfig()), isActive: $isNavigating) {
+                            NavigationLink(destination: HomeScreen(db: DatabaseConfig()    ), isActive: $isNavigating) {
                                     EmptyView()
                                 }
                                 Button(action: {

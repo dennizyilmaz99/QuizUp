@@ -5,4 +5,5 @@ import SwiftUI
 struct CategoriesData: Identifiable {
         var id: UUID = UUID() // Each category have an unique ID
         var categorieName: String
+        var categorieNumber: Int
 }

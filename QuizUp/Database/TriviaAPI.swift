@@ -8,43 +8,47 @@
 import Foundation
 import SwiftUI
 
-class TriviaAPI {
-    
-    static func fetchQuestions(category: Int, difficulty: String, completion: @escaping ([Question]?) -> Void) {
-        let endpoint =  "https://opentdb.com/api.php?amount=10&category=\(category)&difficulty=\(difficulty)&type=multiple&encode=url3986"
-        
+class TriviaAPI: ObservableObject {
    
-       
+   @Published var QnAData: [Question] = []
+    
+   
+    
+    func getQnAData(selectedCategoryNumber: Int, selectedDifficultyInPopup: String) async throws {
         
-        if let url = URL(string: endpoint) {
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if let data = data {
-                    do {
-                        let decoder = JSONDecoder()
-                        let questions = try decoder.decode(QuestionResponse.self, from: data)
-                        completion(questions.results)
-                    } catch {
-                        print("Error decoding JSON: \(error)")
-                        completion(nil)
-                    }
-                } else {
-                    print("Error fetching data: \(error?.localizedDescription ?? "Unknown error")")
-                    completion(nil)
-                }
-            }.resume()
-        } else {
-            print("Invalid URL")
-            completion(nil)
+        let endpoint = "https://opentdb.com/api.php?amount=10&category=\(selectedCategoryNumber)&difficulty=\(selectedDifficultyInPopup)&type=multiple&encode=url3986"
+        
+        guard let url = URL(string: endpoint) else {throw APIErrors.invalidURL}
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw APIErrors.invalidResponse
+        }
+        
+        do {
+    
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            
+            let questionResponse = try decoder.decode(QuestionResponse.self, from: data)
+            
+            DispatchQueue.main.sync {
+                self.QnAData = questionResponse.results
+            }
+        } catch {
+            throw APIErrors.invalidData
         }
         
     }
     
+    
+    
 }
-
-enum APIErrors: Error {
-    case invalidURL
-    case invalidResponse
-    case invalidData
-}
-
 

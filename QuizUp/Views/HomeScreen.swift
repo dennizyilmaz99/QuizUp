@@ -11,6 +11,8 @@ struct HomeScreen: View {
     
     @ObservedObject var db: DatabaseConfig
     @State var isNavigating: Bool = false
+   
+    
     var body: some View {
         NavigationView{
             ZStack{
@@ -61,6 +63,9 @@ struct HomeScreen: View {
         }}
 }
 
-#Preview {
-    HomeScreen(db: DatabaseConfig())
+struct HomeScreen_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeScreen(db: DatabaseConfig())
+    }
+    
 }

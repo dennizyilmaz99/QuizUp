@@ -11,14 +11,22 @@ import Alamofire
 
 struct QuizGameScreen: View {
     
+    // Uppdatera QuizGameScreen för att ta emot 'categoryID'
+  //  var categoryID: Int
     
-    var isDifficult: String // Hämtar värdet av svårighetsgraden användaren har valt i PopUpView
-    var myCategory: String // Hämtar värdet av kateogrin som användaren valt i GameScreen
+   // var isDifficult: String // Hämtar värdet av svårighetsgraden användaren har valt i PopUpView
+  //  var myCategory: String // Hämtar värdet av kateogrin som användaren valt i GameScreen
+    @StateObject var api = TriviaAPI()
+    @Binding var selectedCategoryNumber: Int
+    @Binding var selectedCategoryName: String
+    @State var currentQuestionIndex = 0
+    @Binding var selectedDifficultyInPopup: String
     
-    @State private var questions: [Question] = []
+   // @State var questions: [Question] = []
 
     
     var body: some View {
+       
         ZStack{
             Image("NewBgQuizUp")
                 .resizable()
@@ -37,7 +45,7 @@ struct QuizGameScreen: View {
                         .rounded)).fontWeight(.bold)
                 .foregroundColor(.white)
                 .offset(x: 100, y: -300)
-            Text("Here is a question")
+            Text(api.QnAData.isEmpty ? "Loading..." : api.QnAData[currentQuestionIndex].question)
                 .font(.system(size: 23, design:
                         .rounded)).fontWeight(.bold)
                 .foregroundColor(.white)
@@ -96,6 +104,18 @@ struct QuizGameScreen: View {
                         .cornerRadius(10)
                 })
             }
+        }.task {
+            do {
+                try await api.getQnAData(selectedCategoryNumber: selectedCategoryNumber, selectedDifficultyInPopup: selectedDifficultyInPopup)
+            } catch APIErrors.invalidData {
+                print("Invalid Data")
+            } catch APIErrors.invalidURL {
+                print("Invalid Url")
+            } catch APIErrors.invalidResponse {
+                print("Invalid Response")
+            } catch {
+                print("General error")
+            }
         }
        // Text("Vald svårighetsgrad: \(isDifficult)")
        // Text("Vald kategori: \(myCategory)")
@@ -105,6 +125,12 @@ struct QuizGameScreen: View {
 }
 struct QuizGameScreen_Previews: PreviewProvider {
     static var previews: some View {
-        QuizGameScreen(isDifficult: "", myCategory: "")
+        QuizGameScreen(selectedCategoryNumber: .constant(21), selectedCategoryName: .constant("Sport"), selectedDifficultyInPopup: .constant("Easy"))
     }
+}
+
+enum APIErrors: Error {
+    case invalidURL
+    case invalidResponse
+    case invalidData
 }

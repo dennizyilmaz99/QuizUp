@@ -2,6 +2,7 @@ import SwiftUI
 //import NavigationTransitions
 
 struct LandingScreen: View {
+    
     var body: some View {
         NavigationView{
             ZStack{
@@ -28,7 +29,7 @@ struct LandingScreen: View {
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(.white)
                                             )}
-                                NavigationLink(destination: LoginScreen(db: DatabaseConfig())) {
+                            NavigationLink(destination: LoginScreen(db: DatabaseConfig() .constant(""))) {
                                     Rectangle()
                                     .foregroundColor(.clear)
                                     .frame(width: 270, height: 56)

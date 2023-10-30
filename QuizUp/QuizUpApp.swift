@@ -11,8 +11,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct QuizUpApp: App {
+    init() {
+       
+    }
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var users = DatabaseConfig()
+   
     
     var body: some Scene {
         WindowGroup {

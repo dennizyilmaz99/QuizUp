@@ -1,31 +1,14 @@
 import Foundation
 import SwiftUI
-import Alamofire
+
 
 struct PopUpView: View {
     
-   /* func fetchQuestionsAndAnswers() {
-     
-      
-        do {
-            let request = try AF.request("https://opentdb.com/api.php?amount=10&category=21&difficulty=\(selectedDifficultyInPopup)&type=multiple&encode=url3986")
-            request.responseJSON { response in
-                switch response.result {
-                case .success(let data):
-                    print(data)
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        } catch {
-            print(error)
-        }
-    } */
-    
     
     @Binding var showMyPopup: Bool // Decides if popup should be visible or not
-    @Binding var selectedCategory: String
-    @State private var selectedDifficultyInPopup = "Easy" // By default - easy
+    @Binding var selectedCategoryName: String
+    @Binding var selectedCategoryNumber: Int
+    @State  var selectedDifficultyInPopup = "Easy" // By default - easy
     
     var body: some View {
         VStack(spacing: 70) {
@@ -43,7 +26,8 @@ struct PopUpView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             
-            NavigationLink(destination: QuizGameScreen(isDifficult: selectedDifficultyInPopup, myCategory: selectedCategory), label: {
+            NavigationLink(destination: QuizGameScreen( selectedCategoryNumber: $selectedCategoryNumber, selectedCategoryName: $selectedCategoryName, selectedDifficultyInPopup: $selectedDifficultyInPopup),
+                 label: {
                 Text("Bekräfta").padding()
                     .background(Color.purple)
                     .foregroundColor(.white)
@@ -66,7 +50,7 @@ struct PopUpView: View {
     struct PopUpView_Previews: PreviewProvider {
         
         static var previews: some View {
-            PopUpView(showMyPopup: .constant(true), selectedCategory: .constant("Din valda kateogri"))
+            PopUpView(showMyPopup: .constant(true), selectedCategoryName: .constant("Sport"), selectedCategoryNumber: .constant(21))
     }
        
 
