@@ -46,11 +46,19 @@ struct QuizGameScreen: View {
                 .offset(x: 100, y: -300)
             
             if !api.QnAData.isEmpty {
-                Text(api.QnAData[currentQuestionIndex].question)
-                    .font(.system(size: 23, design:
-                    .rounded)).fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .offset(y: -200)
+                if let decodedQuestion = api.QnAData[currentQuestionIndex].question.removingPercentEncoding {
+                    Text(decodedQuestion)
+                        .font(.system(size: 23, design:
+                        .rounded)).fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .offset(y: -200)
+                } else {
+                    Text("Failed to decode question")
+                        .font(.system(size: 23, design:
+                        .rounded)).fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .offset(y: -200)
+                }
             } else {
                 Text("Loading...")
                     .font(.system(size: 23, design:
@@ -72,9 +80,7 @@ struct QuizGameScreen: View {
                         .background(Color.white)
                         .fontWeight(.bold)
                         .cornerRadius(10)
-                        
                 }
-               
                 
                 Button(action: {
                     

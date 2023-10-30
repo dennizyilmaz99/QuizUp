@@ -49,8 +49,3 @@ class TriviaAPI: ObservableObject {
     
     
 }
-
-/*
- API ger inte rätt svar eftersom
- Kolla vad den förväntar sig, kanske liten bokstav, annat ord istället för de vi lagt in som variabler 
- */

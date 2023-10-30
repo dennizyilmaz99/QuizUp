@@ -1,19 +1,10 @@
-//
-//  TriviaAPIData.swift
-//  QuizUp
-//
-//  Created by Aran Ali on 2023-10-29.
-//
-
 import Foundation
 
-struct QuestionResponse: Codable {
+struct QuestionResponse: Decodable {
     let results: [Question]
 }
 
-
-// Ändra till decodable
-struct Question: Codable {
+struct Question: Decodable {
     var category: String
     var question: String
     var correctAnswer: String
