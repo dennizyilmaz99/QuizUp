@@ -21,11 +21,7 @@ struct QuizUpApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if users.isUserLoggedIn() != nil {
-                HomeScreen(db: users).environmentObject(users)
-            } else {
-                LandingScreen().environmentObject(users)
-            }
+            ContentView().environmentObject(users)
         }
     }
 }

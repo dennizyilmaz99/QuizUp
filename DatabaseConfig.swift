@@ -16,6 +16,25 @@ class DatabaseConfig: ObservableObject {
     @Published var currentUser: User?
     @Published var currentUserData: UserData?
     
+    
+    init() {
+        auth.addStateDidChangeListener { auth, user in
+            if let user = user { // if a user exists -> add current user to 'currentUser' -> start listening
+                print("A user has logged in with email: \(user.email ?? "No Email")")
+                self.currentUser = user
+               // isLoggedIn = true
+                //self.startListeningToDb()
+            } else { // If user does not exist (logged out) -> remove listener -> clear data
+                self.dbListener?.remove()
+                self.dbListener = nil
+                self.currentUserData = nil
+                self.currentUser = nil
+            //    isLoggedIn = false
+                print("User has logged out!")
+            }
+        }
+    }
+    
     func registerUser(name: String, email: String, password: String) -> Bool {
         
         var success = false // A variable to keep track if create account was successfull or not
@@ -102,27 +121,14 @@ class DatabaseConfig: ObservableObject {
         var isLoggedIn = false
 
         // Setting up our listener for changes in the user's authentication
-        auth.addStateDidChangeListener { auth, user in
-            if let user = user { // if a user exists -> add current user to 'currentUser' -> start listening
-                print("A user has logged in with email: \(user.email ?? "No Email")")
-                self.currentUser = user
-                isLoggedIn = true
-                //self.startListeningToDb()
-            } else { // If user does not exist (logged out) -> remove listener -> clear data
-                self.dbListener?.remove()
-                self.dbListener = nil
-                self.currentUserData = nil
-                self.currentUser = nil
-                isLoggedIn = false
-                print("User has logged out!")
-            }
-        }
+      
 
         return isLoggedIn
     }
 
-}
+    
 
+}
 
 
 

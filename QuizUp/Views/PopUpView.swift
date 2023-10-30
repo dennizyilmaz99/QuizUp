@@ -19,10 +19,10 @@ struct PopUpView: View {
             
             Picker("Svårighetsgrad", selection: $selectedDifficultyInPopup) { // Update value
                 Text("Easy")
-                    .tag("Easy")
+                    .tag("easy")
                 
                 Text("Hard")
-                    .tag("Hard")
+                    .tag("hard")
             }
             .pickerStyle(SegmentedPickerStyle())
             

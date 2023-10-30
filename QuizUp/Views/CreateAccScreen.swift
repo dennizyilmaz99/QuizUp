@@ -65,7 +65,7 @@ struct CreateAccScreen: View {
                                       RoundedRectangle(cornerRadius: 10)
                                           .stroke(Color("ButtonColor"), lineWidth: 2)
                                   )
-                            NavigationLink(destination: HomeScreen(db: DatabaseConfig()    ), isActive: $isNavigating) {
+                            NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
                                     EmptyView()
                                 }
                                 Button(action: {

@@ -11,11 +11,9 @@ import Alamofire
 
 struct QuizGameScreen: View {
     
-    // Uppdatera QuizGameScreen för att ta emot 'categoryID'
-  //  var categoryID: Int
-    
    // var isDifficult: String // Hämtar värdet av svårighetsgraden användaren har valt i PopUpView
   //  var myCategory: String // Hämtar värdet av kateogrin som användaren valt i GameScreen
+    
     @StateObject var api = TriviaAPI()
     @Binding var selectedCategoryNumber: Int
     @Binding var selectedCategoryName: String
@@ -26,8 +24,9 @@ struct QuizGameScreen: View {
 
     
     var body: some View {
-       
+    
         ZStack{
+            
             Image("NewBgQuizUp")
                 .resizable()
                 .scaledToFill()
@@ -45,11 +44,21 @@ struct QuizGameScreen: View {
                         .rounded)).fontWeight(.bold)
                 .foregroundColor(.white)
                 .offset(x: 100, y: -300)
-            Text(api.QnAData.isEmpty ? "Loading..." : api.QnAData[currentQuestionIndex].question)
-                .font(.system(size: 23, design:
-                        .rounded)).fontWeight(.bold)
-                .foregroundColor(.white)
-                .offset(y: -200)
+            
+            if !api.QnAData.isEmpty {
+                Text(api.QnAData[currentQuestionIndex].question)
+                    .font(.system(size: 23, design:
+                    .rounded)).fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .offset(y: -200)
+            } else {
+                Text("Loading...")
+                    .font(.system(size: 23, design:
+                    .rounded)).fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .offset(y: -200)
+            }
+           
             
             VStack{
                 Button(action: {
@@ -105,6 +114,10 @@ struct QuizGameScreen: View {
                 })
             }
         }.task {
+            print("Category: \(selectedCategoryName)" )
+            print("Category: \(selectedCategoryNumber)" )
+            print("Difficukty: \(selectedDifficultyInPopup)" )
+            print("https://opentdb.com/api.php?amount=10&category=\(selectedCategoryNumber)&difficulty=\(selectedDifficultyInPopup)&type=multiple&encode=url3986")
             do {
                 try await api.getQnAData(selectedCategoryNumber: selectedCategoryNumber, selectedDifficultyInPopup: selectedDifficultyInPopup)
             } catch APIErrors.invalidData {

@@ -29,7 +29,7 @@ struct LandingScreen: View {
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(.white)
                                             )}
-                            NavigationLink(destination: LoginScreen(db: DatabaseConfig() .constant(""))) {
+                            NavigationLink(destination: LoginScreen(db: DatabaseConfig() )) {
                                     Rectangle()
                                     .foregroundColor(.clear)
                                     .frame(width: 270, height: 56)

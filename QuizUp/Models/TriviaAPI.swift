@@ -12,8 +12,6 @@ class TriviaAPI: ObservableObject {
    
    @Published var QnAData: [Question] = []
     
-   
-    
     func getQnAData(selectedCategoryNumber: Int, selectedDifficultyInPopup: String) async throws {
         
         let endpoint = "https://opentdb.com/api.php?amount=10&category=\(selectedCategoryNumber)&difficulty=\(selectedDifficultyInPopup)&type=multiple&encode=url3986"
@@ -52,3 +50,7 @@ class TriviaAPI: ObservableObject {
     
 }
 
+/*
+ API ger inte rätt svar eftersom
+ Kolla vad den förväntar sig, kanske liten bokstav, annat ord istället för de vi lagt in som variabler 
+ */

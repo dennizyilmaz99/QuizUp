@@ -5,10 +5,10 @@ struct GameScreen: View {
     
     @State var showMyPopup = false
     //@State private var questions: [Question] = []
-    @State var selectedCategoryNumber: Int // Lagra dne valda kategorin
+    @State var selectedCategoryNumber = 0 // Lagra dne valda kategorin
   //  @State private var selectedDifficulty: String = "" // Lagra den valda svårighetsgraden
    
-    @State var selectedCategoryName: String
+    @State var selectedCategoryName = ""
     
     // An array of categories a user can select between. Every category is a object of CategoriesData
     let categories: [CategoriesData] = 

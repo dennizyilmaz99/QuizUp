@@ -9,12 +9,11 @@ import SwiftUI
 
 struct HomeScreen: View {
     
-    @ObservedObject var db: DatabaseConfig
+    @EnvironmentObject var db: DatabaseConfig
     @State var isNavigating: Bool = false
    
     
     var body: some View {
-        NavigationView{
             ZStack{
                 LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
@@ -38,34 +37,31 @@ struct HomeScreen: View {
                             .rounded)).fontWeight(.heavy).foregroundColor(.white)
                 }.offset(y: -230)
                 VStack {
-                    NavigationLink(destination: GameScreen(), isActive: $isNavigating) {
-                        EmptyView()
-                    }
-                    Button(action: {
-                        
-                    }) {
+                    NavigationLink(destination: GameScreen(), label:  {
                         Rectangle()
-                            .foregroundColor(.clear)
-                            .frame(width: 270, height: 200)
-                            .background(Color("ButtonColor"))
-                            .cornerRadius(20)
-                            .shadow(radius: 4)
-                            .overlay(
-                                Text("Spela")
+                           .foregroundColor(.clear)
+                           .frame(width: 270, height: 200)
+                          .background(Color("ButtonColor"))
+                          .cornerRadius(20)
+                          .shadow(radius: 4)
+                          .overlay(
+                                Text("Hello")
                                     .font(.system(size: 25, design: .rounded))
                                     .fontWeight(.bold)
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(.white)
                             )
-                    }
+                        
+                    })
+                   
                 }
             }
-        }}
+        }
 }
 
 struct HomeScreen_Previews: PreviewProvider {
     static var previews: some View {
-        HomeScreen(db: DatabaseConfig())
+        HomeScreen().environmentObject(DatabaseConfig())
     }
     
 }
