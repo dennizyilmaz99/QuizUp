@@ -50,7 +50,7 @@ struct CreateAccScreen: View {
                                 .cornerRadius(10)
                             // Maybe change to secureField instead for password
                             SecureField("", text: $password, prompt: Text("Lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
-                                .padding(8))
+                                .padding(8)
                                 .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
                                 .background(Color(.color4))
                                 .foregroundColor(.white)
