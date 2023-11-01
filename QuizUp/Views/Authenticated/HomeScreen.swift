@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeScreen: View {
     
     @EnvironmentObject var db: DatabaseConfig
+<<<<<<< HEAD:QuizUp/Views/HomeScreen.swift
     @State var isNavigatingToGameScreen: Bool = false
     @State var isNavigatingToProfileScreen: Bool = false
     @State var showLeaderboard = false
@@ -10,6 +11,13 @@ struct HomeScreen: View {
     var body: some View {
         ZStack{
             ZStack {
+=======
+    @State var isNavigating: Bool = false
+   
+    
+    var body: some View {
+            ZStack{
+>>>>>>> origin/main:QuizUp/Views/Authenticated/HomeScreen.swift
                 LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
                 HStack {
@@ -24,6 +32,7 @@ struct HomeScreen: View {
                     Spacer()
                     Image("Icon5").resizable().aspectRatio(contentMode: .fit).frame(width: 175, height: 175)
                     Spacer()
+<<<<<<< HEAD:QuizUp/Views/HomeScreen.swift
                     NavigationLink(destination: ProfileScreen(), isActive: $isNavigatingToProfileScreen) {
                         EmptyView()
                     }
@@ -79,4 +88,44 @@ struct HomeScreen: View {
 
 #Preview {
     HomeScreen()
+=======
+                    Button(action: {
+                        isNavigating = true
+                    }) {
+                        Image(systemName: "gearshape.fill").font(.title).foregroundColor(.white)
+                    }.padding()
+                }.offset(y: -340)
+                VStack {
+                    Text("Välkommen").font(.system(size: 30, design:
+                            .rounded)).fontWeight(.heavy).foregroundColor(.white)
+                }.offset(y: -250)
+                VStack {
+                    NavigationLink(destination: GameScreen(), label:  {
+                        Rectangle()
+                           .foregroundColor(.clear)
+                           .frame(width: 270, height: 200)
+                          .background(Color("ButtonColor"))
+                          .cornerRadius(20)
+                          .shadow(radius: 4)
+                          .overlay(
+                                Text("Spela")
+                                    .font(.system(size: 25, design: .rounded))
+                                    .fontWeight(.bold)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(.white)
+                            )
+                        
+                    })
+                   
+                }
+            }
+        }
+}
+
+struct HomeScreen_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeScreen().environmentObject(DatabaseConfig())
+    }
+    
+>>>>>>> origin/main:QuizUp/Views/Authenticated/HomeScreen.swift
 }

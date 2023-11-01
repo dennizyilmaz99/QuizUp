@@ -24,12 +24,17 @@
 		59EC7DCC2AD6B4F6000C2CFB /* QuizUpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC7DCB2AD6B4F6000C2CFB /* QuizUpUITestsLaunchTests.swift */; };
 		B03A341C2AE56FFF00EDFD91 /* CategoriesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03A341B2AE56FFF00EDFD91 /* CategoriesData.swift */; };
 		B03A341E2AE57C4300EDFD91 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03A341D2AE57C4300EDFD91 /* PopUpView.swift */; };
+		B048D1E92AE9AC830067B111 /* QuizGameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B048D1E82AE9AC830067B111 /* QuizGameScreen.swift */; };
+		B048D1EC2AEAC5610067B111 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B048D1EB2AEAC5610067B111 /* Alamofire */; };
 		B07F4D522AE44BDE00F53E49 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B07F4D512AE44BDE00F53E49 /* FirebaseAuth */; };
 		B07F4D542AE44BDE00F53E49 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = B07F4D532AE44BDE00F53E49 /* FirebaseDatabase */; };
 		B07F4D562AE44BDE00F53E49 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B07F4D552AE44BDE00F53E49 /* FirebaseDatabaseSwift */; };
 		B07F4D582AE44BDE00F53E49 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B07F4D572AE44BDE00F53E49 /* FirebaseFirestore */; };
 		B080ED8A2ADFE06E00E33B10 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B080ED892ADFE06E00E33B10 /* UserData.swift */; };
 		B08C973B2AE417A000004780 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B08C973A2AE417A000004780 /* FirebaseFirestoreSwift */; };
+		B0A27F7F2AEE964100543EC2 /* TriviaAPIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A27F7E2AEE964100543EC2 /* TriviaAPIData.swift */; };
+		B0A27F812AEFE84100543EC2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A27F802AEFE84100543EC2 /* ContentView.swift */; };
+		B0AD20FB2AE930BF00B4674E /* TriviaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AD20FA2AE930BF00B4674E /* TriviaAPI.swift */; };
 		B0B3CDF62ADEB866008C5CDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0B3CDF52ADEB866008C5CDB /* GoogleService-Info.plist */; };
 		B0B3CDFE2ADEBA66008C5CDB /* DatabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B3CDFD2ADEBA66008C5CDB /* DatabaseConfig.swift */; };
 /* End PBXBuildFile section */
@@ -72,7 +77,11 @@
 		59EC7DCB2AD6B4F6000C2CFB /* QuizUpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizUpUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B03A341B2AE56FFF00EDFD91 /* CategoriesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesData.swift; sourceTree = SOURCE_ROOT; };
 		B03A341D2AE57C4300EDFD91 /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
+		B048D1E82AE9AC830067B111 /* QuizGameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizGameScreen.swift; sourceTree = "<group>"; };
 		B080ED892ADFE06E00E33B10 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = SOURCE_ROOT; };
+		B0A27F7E2AEE964100543EC2 /* TriviaAPIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaAPIData.swift; sourceTree = "<group>"; };
+		B0A27F802AEFE84100543EC2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B0AD20FA2AE930BF00B4674E /* TriviaAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaAPI.swift; sourceTree = "<group>"; };
 		B0B3CDF52ADEB866008C5CDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B0B3CDFD2ADEBA66008C5CDB /* DatabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseConfig.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -86,6 +95,7 @@
 				59930AE22AEAA46F0079929C /* NavigationTransitions in Frameworks */,
 				B07F4D542AE44BDE00F53E49 /* FirebaseDatabase in Frameworks */,
 				B08C973B2AE417A000004780 /* FirebaseFirestoreSwift in Frameworks */,
+				B048D1EC2AEAC5610067B111 /* Alamofire in Frameworks */,
 				B07F4D582AE44BDE00F53E49 /* FirebaseFirestore in Frameworks */,
 				B07F4D522AE44BDE00F53E49 /* FirebaseAuth in Frameworks */,
 			);
@@ -119,19 +129,23 @@
 				B03A341D2AE57C4300EDFD91 /* PopUpView.swift */,
 				596FF2132AE6AA7A0002C4B4 /* ProfileScreen.swift */,
 				590F4AA92AE9918B008BB60C /* LeaderBoardView.swift */,
+				B0A27F852AF2610400543EC2 /* Authenticated */,
+				B0A27F842AF260F100543EC2 /* Unauthenticated */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5994B6DF2ADE823E003732B4 /* Database */ = {
+		5994B6DF2ADE823E003732B4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				B0B3CDF52ADEB866008C5CDB /* GoogleService-Info.plist */,
 				B0B3CDFD2ADEBA66008C5CDB /* DatabaseConfig.swift */,
 				B080ED892ADFE06E00E33B10 /* UserData.swift */,
 				B03A341B2AE56FFF00EDFD91 /* CategoriesData.swift */,
+				B0A27F7E2AEE964100543EC2 /* TriviaAPIData.swift */,
+				B0AD20FA2AE930BF00B4674E /* TriviaAPI.swift */,
 			);
-			path = Database;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		59EC7DA22AD6B4F5000C2CFB = {
@@ -160,11 +174,11 @@
 			children = (
 				59D7D0A52ADD5D89008DEAD2 /* Info.plist */,
 				59EC7DAE2AD6B4F5000C2CFB /* QuizUpApp.swift */,
-				5994B6DF2ADE823E003732B4 /* Database */,
+				5994B6DF2ADE823E003732B4 /* Models */,
 				5994B6DE2ADE816F003732B4 /* Views */,
 				59EC7DB22AD6B4F6000C2CFB /* Assets.xcassets */,
 				59EC7DB42AD6B4F6000C2CFB /* Preview Content */,
-				59E3E26D2AF2879A004C0191 /* ContentView.swift */,
+				B0A27F802AEFE84100543EC2 /* ContentView.swift */,
 			);
 			path = QuizUp;
 			sourceTree = "<group>";
@@ -192,6 +206,28 @@
 				59EC7DCB2AD6B4F6000C2CFB /* QuizUpUITestsLaunchTests.swift */,
 			);
 			path = QuizUpUITests;
+			sourceTree = "<group>";
+		};
+		B0A27F842AF260F100543EC2 /* Unauthenticated */ = {
+			isa = PBXGroup;
+			children = (
+				59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */,
+				59EC7DB02AD6B4F5000C2CFB /* CreateAccScreen.swift */,
+				599113322AD9D629009119B9 /* LandingScreen.swift */,
+			);
+			path = Unauthenticated;
+			sourceTree = "<group>";
+		};
+		B0A27F852AF2610400543EC2 /* Authenticated */ = {
+			isa = PBXGroup;
+			children = (
+				59D7D0A22ADD54FC008DEAD2 /* HomeScreen.swift */,
+				59D7D0AC2ADDB8CA008DEAD2 /* SettingsScreen.swift */,
+				598655742ADFDD6000870AF7 /* GameScreen.swift */,
+				B03A341D2AE57C4300EDFD91 /* PopUpView.swift */,
+				B048D1E82AE9AC830067B111 /* QuizGameScreen.swift */,
+			);
+			path = Authenticated;
 			sourceTree = "<group>";
 		};
 		B0B3CDF82ADEB8F0008C5CDB /* Frameworks */ = {
@@ -224,6 +260,7 @@
 				B07F4D552AE44BDE00F53E49 /* FirebaseDatabaseSwift */,
 				B07F4D572AE44BDE00F53E49 /* FirebaseFirestore */,
 				59930AE12AEAA46F0079929C /* NavigationTransitions */,
+				B048D1EB2AEAC5610067B111 /* Alamofire */,
 			);
 			productName = QuizUp;
 			productReference = 59EC7DAB2AD6B4F5000C2CFB /* QuizUp.app */;
@@ -300,6 +337,7 @@
 			packageReferences = (
 				B08C97392AE4167E00004780 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				59930ADE2AEA96810079929C /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */,
+				B048D1EA2AEAC5610067B111 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 59EC7DAC2AD6B4F5000C2CFB /* Products */;
 			projectDirPath = "";
@@ -346,8 +384,10 @@
 			files = (
 				590F4AAA2AE9918B008BB60C /* LeaderBoardView.swift in Sources */,
 				B03A341E2AE57C4300EDFD91 /* PopUpView.swift in Sources */,
+				B0A27F7F2AEE964100543EC2 /* TriviaAPIData.swift in Sources */,
 				59EC7DB12AD6B4F5000C2CFB /* CreateAccScreen.swift in Sources */,
 				59D7D0A32ADD54FC008DEAD2 /* HomeScreen.swift in Sources */,
+				B048D1E92AE9AC830067B111 /* QuizGameScreen.swift in Sources */,
 				B080ED8A2ADFE06E00E33B10 /* UserData.swift in Sources */,
 				59D7D0A12ADD54E8008DEAD2 /* LoginScreen.swift in Sources */,
 				599113332AD9D629009119B9 /* LandingScreen.swift in Sources */,
@@ -356,6 +396,8 @@
 				598655752ADFDD6000870AF7 /* GameScreen.swift in Sources */,
 				59E3E26E2AF2879A004C0191 /* ContentView.swift in Sources */,
 				B03A341C2AE56FFF00EDFD91 /* CategoriesData.swift in Sources */,
+				B0AD20FB2AE930BF00B4674E /* TriviaAPI.swift in Sources */,
+				59D7D0AD2ADDB8CA008DEAD2 /* SettingsScreen.swift in Sources */,
 				59EC7DAF2AD6B4F5000C2CFB /* QuizUpApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -698,6 +740,12 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.13.1;
+		B048D1EA2AEAC5610067B111 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.0;
 			};
 		};
 		B08C97392AE4167E00004780 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -715,6 +763,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 59930ADE2AEA96810079929C /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */;
 			productName = NavigationTransitions;
+		B048D1EB2AEAC5610067B111 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B048D1EA2AEAC5610067B111 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		B07F4D512AE44BDE00F53E49 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

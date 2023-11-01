@@ -1,20 +1,20 @@
 //
-//  ContentView.swift
+//  LoginScreen.swift
 //  QuizUp
 //
-//  Created by dator on 2023-10-11.
+//  Created by dator on 2023-10-16.
 //
 
 import SwiftUI
 
-struct CreateAccScreen: View {
+struct LoginScreen: View {
     
     @ObservedObject var db: DatabaseConfig
     @State var isNavigating: Bool = false
-    @State var name: String = ""
-    @State var email: String = ""
-    @State var password: String = ""
-    @State var confirmPassword: String = ""
+    @State var email = ""
+    @State var password = ""
+   
+
     
     var body: some View {
         ZStack{
@@ -23,24 +23,19 @@ struct CreateAccScreen: View {
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-            Text("Skapa konto")
+            Text("Logga in")
                 .font(.system(size: 36, design: .rounded)).fontWeight(.bold)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.white).offset(y: -300)
+                .foregroundColor(.white).offset(y: -250)
             ZStack{
                 Rectangle()
+<<<<<<< HEAD:QuizUp/Views/LoginScreen.swift
                     .foregroundColor(.clear)
-                    .frame(width: 351, height: 450)
+                    .frame(width: 351, height: 329)
                     .background(Color("ButtonColor"))
                     .cornerRadius(20)
                     .overlay(
-                        VStack (spacing: 30){
-                            TextField("", text: $name, prompt: Text("Namn").foregroundColor(Color.color5).font(.system(size: 15)))
-                                .padding(8)
-                                .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
-                                .background(Color(.color4))
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
+                        VStack (spacing: 25){
                             // Maybe att textFieldStyle to email
                             TextField("", text: $email, prompt: Text("E-post").foregroundColor(Color.color5).font(.system(size: 15)))
                                 .padding(8)
@@ -55,21 +50,38 @@ struct CreateAccScreen: View {
                                 .background(Color(.color4))
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
-                            SecureField("", text: $confirmPassword, prompt: Text("Bekräfta lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
-                                .padding(8)
-                                .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
-                                .background(Color(.color4))
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
                             NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
+=======
+                  .foregroundColor(.clear)
+                  .frame(width: 351, height: 329)
+                  .background(.white)
+                  .cornerRadius(20)
+                  .overlay(
+                    VStack (spacing: 25){
+                        // Maybe att textFieldStyle to email
+                      TextField("E-post", text: $email)
+                            .padding(8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color("ButtonColor"), lineWidth: 2)
+                            )
+                        // Maybe change to secureField instead for password
+                      SecureField("Lösenord", text: $password)
+                            .padding(8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color("ButtonColor"), lineWidth: 2)
+                            )
+                        NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
+>>>>>>> origin/main:QuizUp/Views/Unauthenticated/LoginScreen.swift
                                 EmptyView()
                             }
                             Button(action: {
-                                if !email.isEmpty && !password.isEmpty && !name.isEmpty && confirmPassword == password {
-                                    _ = db.registerUser(name: name, email: email, password: password)
+                                if (!email.isEmpty && !password.isEmpty) {
+                                    _ = db.logInUser(email: email, password: password)
                                     isNavigating = true // Enable the navigation
                                 } else {
-                                    print("Error did not go")
+                                    print("Error")
                                     isNavigating = false
                                 }
                             }) {
@@ -80,7 +92,7 @@ struct CreateAccScreen: View {
                                     .cornerRadius(20)
                                     .shadow(color: Color.black.opacity(0.2), radius: 20)
                                     .overlay(
-                                        Text("Skapa")
+                                        Text("Logga in")
                                             .font(.system(size: 16, design: .rounded))
                                             .fontWeight(.bold)
                                             .multilineTextAlignment(.center)
@@ -109,5 +121,5 @@ struct CreateAccScreen: View {
 }
 
 #Preview {
-    CreateAccScreen(db: DatabaseConfig())
+    LoginScreen(db: DatabaseConfig())
 }

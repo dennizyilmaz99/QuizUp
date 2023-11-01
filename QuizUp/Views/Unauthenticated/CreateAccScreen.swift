@@ -1,18 +1,27 @@
 //
-//  LoginScreen.swift
+//  ContentView.swift
 //  QuizUp
 //
-//  Created by dator on 2023-10-16.
+//  Created by dator on 2023-10-11.
 //
 
 import SwiftUI
 
-struct LoginScreen: View {
+struct CreateAccScreen: View {
     
     @ObservedObject var db: DatabaseConfig
     @State var isNavigating: Bool = false
-    @State var email = ""
-    @State var password = ""
+    @State var name: String = ""
+    @State var email: String = ""
+    @State var password: String = ""
+    @State var confirmPassword: String = ""
+<<<<<<< HEAD:QuizUp/Views/CreateAccScreen.swift
+=======
+    private let shadowColor: Color = .init(red: 197/255, green: 197/255, blue: 197/255)
+    private let baseColor: Color = .init(red: 232/255, green: 232/255, blue: 232/255)
+  
+
+>>>>>>> origin/main:QuizUp/Views/Unauthenticated/CreateAccScreen.swift
     
     var body: some View {
         ZStack{
@@ -21,18 +30,24 @@ struct LoginScreen: View {
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-            Text("Logga in")
+            Text("Skapa konto")
                 .font(.system(size: 36, design: .rounded)).fontWeight(.bold)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.white).offset(y: -250)
+                .foregroundColor(.white).offset(y: -300)
             ZStack{
                 Rectangle()
                     .foregroundColor(.clear)
-                    .frame(width: 351, height: 329)
+                    .frame(width: 351, height: 450)
                     .background(Color("ButtonColor"))
                     .cornerRadius(20)
                     .overlay(
-                        VStack (spacing: 25){
+                        VStack (spacing: 30){
+                            TextField("", text: $name, prompt: Text("Namn").foregroundColor(Color.color5).font(.system(size: 15)))
+                                .padding(8)
+                                .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
+                                .background(Color(.color4))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
                             // Maybe att textFieldStyle to email
                             TextField("", text: $email, prompt: Text("E-post").foregroundColor(Color.color5).font(.system(size: 15)))
                                 .padding(8)
@@ -43,6 +58,13 @@ struct LoginScreen: View {
                             // Maybe change to secureField instead for password
                             SecureField("", text: $password, prompt: Text("Lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
                                 .padding(8)
+<<<<<<< HEAD:QuizUp/Views/CreateAccScreen.swift
+                                .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
+                                .background(Color(.color4))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                            SecureField("", text: $confirmPassword, prompt: Text("Bekräfta lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
+                                .padding(8)
                                 .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
                                 .background(Color(.color4))
                                 .foregroundColor(.white)
@@ -51,12 +73,26 @@ struct LoginScreen: View {
                                 EmptyView()
                             }
                             Button(action: {
-                                if (!email.isEmpty && !password.isEmpty) {
-                                    _ = db.logInUser(email: email, password: password)
+                                if !email.isEmpty && !password.isEmpty && !name.isEmpty && confirmPassword == password {
+                                    _ = db.registerUser(name: name, email: email, password: password)
                                     isNavigating = true // Enable the navigation
                                 } else {
-                                    print("Error")
+                                    print("Error did not go")
                                     isNavigating = false
+=======
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color("ButtonColor"), lineWidth: 2)
+                                )
+                            SecureField("Bekräfta lösenord", text: $confirmPassword)
+                                  .padding(8)
+                                  .background(
+                                      RoundedRectangle(cornerRadius: 10)
+                                          .stroke(Color("ButtonColor"), lineWidth: 2)
+                                  )
+                            NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
+                                    EmptyView()
+>>>>>>> origin/main:QuizUp/Views/Unauthenticated/CreateAccScreen.swift
                                 }
                             }) {
                                 Rectangle()
@@ -66,7 +102,7 @@ struct LoginScreen: View {
                                     .cornerRadius(20)
                                     .shadow(color: Color.black.opacity(0.2), radius: 20)
                                     .overlay(
-                                        Text("Logga in")
+                                        Text("Skapa")
                                             .font(.system(size: 16, design: .rounded))
                                             .fontWeight(.bold)
                                             .multilineTextAlignment(.center)
@@ -95,5 +131,5 @@ struct LoginScreen: View {
 }
 
 #Preview {
-    LoginScreen(db: DatabaseConfig())
+    CreateAccScreen(db: DatabaseConfig())
 }
