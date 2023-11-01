@@ -9,8 +9,12 @@ import SwiftUI
 
 struct LoginScreen: View {
     
+    @ObservedObject var db: DatabaseConfig
+    @State var isNavigating: Bool = false
     @State var email = ""
     @State var password = ""
+   
+
     
     var body: some View {
         ZStack{
@@ -30,45 +34,53 @@ struct LoginScreen: View {
                   .background(.white)
                   .cornerRadius(20)
                   .overlay(
-                    VStack (spacing: 50){
+                    VStack (spacing: 25){
                         // Maybe att textFieldStyle to email
                       TextField("E-post", text: $email)
-                            .padding(10)
+                            .padding(8)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Color("ButtonColor"), lineWidth: 2)
                             )
                         // Maybe change to secureField instead for password
-                      TextField("Lösenord", text: $password)
-                            .padding(10)
+                      SecureField("Lösenord", text: $password)
+                            .padding(8)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Color("ButtonColor"), lineWidth: 2)
                             )
-                            NavigationLink(destination: HomeScreen()) {
+                        NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
+                                EmptyView()
+                            }
+                            Button(action: {
+                                if (!email.isEmpty && !password.isEmpty) {
+                                    _ = db.logInUser(email: email, password: password)
+                                    isNavigating = true // Enable the navigation
+                                } else {
+                                    print("Error")
+                                    isNavigating = false
+                                }
+                            }) {
                                 Rectangle()
                                     .foregroundColor(.clear)
                                     .frame(width: 270, height: 56)
                                     .background(Color("ButtonColor"))
                                     .cornerRadius(20)
+                                    .shadow(radius: 4)
                                     .overlay(
-                                        // Maybe add another field to repeat the password and check if it's equal
-                                    Text("Skapa konto")
-                                        .font(.system(size: 16, design:
-                                                .rounded)).fontWeight(.bold)
-                                        .multilineTextAlignment(.center)
-                                        .foregroundColor(.white)
+                                        Text("Logga in")
+                                            .font(.system(size: 16, design: .rounded))
+                                            .fontWeight(.bold)
+                                            .multilineTextAlignment(.center)
+                                            .foregroundColor(.white)
                                     )
                             }
-                            .onTapGesture {
-                                // Add terms here on navigationLink
-                            }
-                    }.padding())
+                    }.padding(42)).shadow(radius: 20 )
             }
         }
     }
 }
 
 #Preview {
-    LoginScreen()
+    LoginScreen(db: DatabaseConfig())
 }
