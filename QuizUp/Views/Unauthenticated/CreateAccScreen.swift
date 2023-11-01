@@ -15,13 +15,6 @@ struct CreateAccScreen: View {
     @State var email: String = ""
     @State var password: String = ""
     @State var confirmPassword: String = ""
-<<<<<<< HEAD:QuizUp/Views/CreateAccScreen.swift
-=======
-    private let shadowColor: Color = .init(red: 197/255, green: 197/255, blue: 197/255)
-    private let baseColor: Color = .init(red: 232/255, green: 232/255, blue: 232/255)
-  
-
->>>>>>> origin/main:QuizUp/Views/Unauthenticated/CreateAccScreen.swift
     
     var body: some View {
         ZStack{
@@ -58,7 +51,6 @@ struct CreateAccScreen: View {
                             // Maybe change to secureField instead for password
                             SecureField("", text: $password, prompt: Text("Lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
                                 .padding(8)
-<<<<<<< HEAD:QuizUp/Views/CreateAccScreen.swift
                                 .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
                                 .background(Color(.color4))
                                 .foregroundColor(.white)
@@ -79,7 +71,6 @@ struct CreateAccScreen: View {
                                 } else {
                                     print("Error did not go")
                                     isNavigating = false
-=======
                                 .background(
                                     RoundedRectangle(cornerRadius: 10)
                                         .stroke(Color("ButtonColor"), lineWidth: 2)
@@ -92,7 +83,9 @@ struct CreateAccScreen: View {
                                   )
                             NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
                                     EmptyView()
->>>>>>> origin/main:QuizUp/Views/Unauthenticated/CreateAccScreen.swift
+
+                              
+                            
                                 }
                             }) {
                                 Rectangle()

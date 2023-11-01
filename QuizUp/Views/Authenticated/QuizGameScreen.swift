@@ -11,7 +11,7 @@ struct QuizGameScreen: View {
     @State var currentQuestionIndex = 0
     @Binding var selectedDifficultyInPopup: String
     @State var score = 0
-    @State var answerSelected = false
+    @State var answerSelected: String?
     
     
     func shuffleAnswers() -> [String] {
@@ -83,15 +83,26 @@ struct QuizGameScreen: View {
             if currentQuestionIndex < api.QnAData.count { // Check if the current question index is within bounds
                 ForEach(shuffleAnswers(), id: \.self) { shuffledAnswer in
                     Button(action: {
+                        if answerSelected == nil {
+                            answerSelected = shuffledAnswer
+                        }
                         if shuffledAnswer == api.QnAData[currentQuestionIndex].correctAnswer {
+    
+                            answerSelected = shuffledAnswer
                             
-                            print("correct answer")
-                            score += 1
-                            print("Player score: \(score)")
+                            if let userAnswer = answerSelected {
+                                if userAnswer == api.QnAData[currentQuestionIndex].correctAnswer {
+                                    score += 1
+                                    print("Correct answer, your score: \(score)")
+                                } else {
+                                    print("Wrong answer, your score: \(score)")
+                                }
+                            }
+                            
                     } else {
                         
                             print("wrong answer, player score: \(score)")
-                        
+                      
                         }
                     }) {
                         
@@ -100,7 +111,11 @@ struct QuizGameScreen: View {
                             .foregroundColor(.purple)
                             .frame(width: 300, alignment: .leading)
                             .padding()
-                            .background(Color.white)
+                            .background(
+                                answerSelected == shuffledAnswer ?
+                                (shuffledAnswer == api.QnAData[currentQuestionIndex].correctAnswer ? Color.green : Color.red) :
+                                Color.white
+                            )
                             .fontWeight(.bold)
                             .cornerRadius(10)
                                 
@@ -111,6 +126,7 @@ struct QuizGameScreen: View {
         }
                 
                 Button(action: {
+                    answerSelected = nil
                     goToNextQuestion()
                 }, label: {
                     Text("Next")

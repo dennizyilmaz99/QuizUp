@@ -1,13 +1,4 @@
-<<<<<<< HEAD
-=======
-//
-//  ContentView.swift
-//  QuizUp
-//
-//  Created by Aran Ali on 2023-10-30.
-//
 
->>>>>>> origin/main
 import SwiftUI
 
 struct ContentView: View {
