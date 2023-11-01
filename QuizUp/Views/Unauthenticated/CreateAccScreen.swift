@@ -71,6 +71,21 @@ struct CreateAccScreen: View {
                                 } else {
                                     print("Error did not go")
                                     isNavigating = false
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color("ButtonColor"), lineWidth: 2)
+                                )
+                            SecureField("Bekräfta lösenord", text: $confirmPassword)
+                                  .padding(8)
+                                  .background(
+                                      RoundedRectangle(cornerRadius: 10)
+                                          .stroke(Color("ButtonColor"), lineWidth: 2)
+                                  )
+                            NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
+                                    EmptyView()
+
+                              
+                            
                                 }
                             }) {
                                 Rectangle()
