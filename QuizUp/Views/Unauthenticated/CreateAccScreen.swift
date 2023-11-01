@@ -50,7 +50,7 @@ struct CreateAccScreen: View {
                                 .cornerRadius(10)
                             // Maybe change to secureField instead for password
                             SecureField("", text: $password, prompt: Text("Lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
-                                .padding(8)
+                                .padding(8))
                                 .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
                                 .background(Color(.color4))
                                 .foregroundColor(.white)
@@ -71,6 +71,28 @@ struct CreateAccScreen: View {
                                 } else {
                                     print("Error did not go")
                                     isNavigating = false
+                            NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
+                                EmptyView()
+                            }
+                            Button(action: {
+                                if !email.isEmpty && !password.isEmpty && !name.isEmpty && confirmPassword == password {
+                                    _ = db.registerUser(name: name, email: email, password: password)
+                                    isNavigating = true // Enable the navigation
+                                } else {
+                                    print("Error did not go")
+                                    isNavigating = false
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color("ButtonColor"), lineWidth: 2)
+                                )
+                            SecureField("Bekräfta lösenord", text: $confirmPassword)
+                                  .padding(8)
+                                  .background(
+                                      RoundedRectangle(cornerRadius: 10)
+                                          .stroke(Color("ButtonColor"), lineWidth: 2)
+                                  )
+                            NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
+                                    EmptyView()
                                 }
                             }) {
                                 Rectangle()
