@@ -15,85 +15,96 @@ struct CreateAccScreen: View {
     @State var email: String = ""
     @State var password: String = ""
     @State var confirmPassword: String = ""
-    private let shadowColor: Color = .init(red: 197/255, green: 197/255, blue: 197/255)
-    private let baseColor: Color = .init(red: 232/255, green: 232/255, blue: 232/255)
-  
-
     
     var body: some View {
+        ZStack{
+            Image("NewBgQuizUp")
+                .resizable()
+                .scaledToFill()
+                .edgesIgnoringSafeArea(.all)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            Text("Skapa konto")
+                .font(.system(size: 36, design: .rounded)).fontWeight(.bold)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.white).offset(y: -300)
             ZStack{
-                Image("NewBgQuizUp")
-                    .resizable()
-                    .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                Text("Skapa konto")
-                    .font(.system(size: 36, design: .rounded)).fontWeight(.bold)
-                  .multilineTextAlignment(.center)
-                  .foregroundColor(.white).offset(y: -325)
-                ZStack{
-                    Rectangle()
-                      .foregroundColor(.clear)
-                      .frame(width: 351, height: 400)
-                      .background(.white)
-                      .cornerRadius(20)
-                      .overlay(
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .frame(width: 351, height: 450)
+                    .background(Color("ButtonColor"))
+                    .cornerRadius(20)
+                    .overlay(
                         VStack (spacing: 30){
-                          TextField("Namn", text: $name)
-                                        .padding(8)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .stroke(Color("ButtonColor"), lineWidth: 2)
-                                                .shadow(color: .black, radius: 20))
+                            TextField("", text: $name, prompt: Text("Namn").foregroundColor(Color.color5).font(.system(size: 15)))
+                                .padding(8)
+                                .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
+                                .background(Color(.color4))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
                             // Maybe att textFieldStyle to email
-                          TextField("E-post", text: $email)
+                            TextField("", text: $email, prompt: Text("E-post").foregroundColor(Color.color5).font(.system(size: 15)))
                                 .padding(8)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color("ButtonColor"), lineWidth: 2)
-                                )
+                                .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
+                                .background(Color(.color4))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
                             // Maybe change to secureField instead for password
-                          SecureField("Lösenord", text: $password)
+                            SecureField("", text: $password, prompt: Text("Lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
                                 .padding(8)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color("ButtonColor"), lineWidth: 2)
-                                )
-                            SecureField("Bekräfta lösenord", text: $confirmPassword)
-                                  .padding(8)
-                                  .background(
-                                      RoundedRectangle(cornerRadius: 10)
-                                          .stroke(Color("ButtonColor"), lineWidth: 2)
-                                  )
+                                .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
+                                .background(Color(.color4))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                            SecureField("", text: $confirmPassword, prompt: Text("Bekräfta lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
+                                .padding(8)
+                                .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
+                                .background(Color(.color4))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
                             NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
-                                    EmptyView()
+                                EmptyView()
+                            }
+                            Button(action: {
+                                if !email.isEmpty && !password.isEmpty && !name.isEmpty && confirmPassword == password {
+                                    _ = db.registerUser(name: name, email: email, password: password)
+                                    isNavigating = true // Enable the navigation
+                                } else {
+                                    print("Error did not go")
+                                    isNavigating = false
                                 }
-                                Button(action: {
-                                    if !email.isEmpty && !password.isEmpty && !name.isEmpty && confirmPassword == password {
-                                        _ = db.registerUser(name: name, email: email, password: password)
-                                        isNavigating = true // Enable the navigation
-                                    } else {
-                                        print("Error did not go")
-                                        isNavigating = false
-                                    }
-                                }) {
-                                    Rectangle()
-                                        .foregroundColor(.clear)
-                                        .frame(width: 270, height: 56)
-                                        .background(Color("ButtonColor"))
-                                        .cornerRadius(20)
-                                        .shadow(radius: 4)
-                                        .overlay(
-                                            Text("Skapa")
-                                                .font(.system(size: 16, design: .rounded))
-                                                .fontWeight(.bold)
-                                                .multilineTextAlignment(.center)
-                                                .foregroundColor(.white)
-                                        )
-                                }
-                        }.padding(42)).shadow(radius: 20 )
-                }.offset(y: -50)
+                            }) {
+                                Rectangle()
+                                    .foregroundColor(.clear)
+                                    .frame(width: 270, height: 56)
+                                    .background(Color("ButtonColor"))
+                                    .cornerRadius(20)
+                                    .shadow(color: Color.black.opacity(0.2), radius: 20)
+                                    .overlay(
+                                        Text("Skapa")
+                                            .font(.system(size: 16, design: .rounded))
+                                            .fontWeight(.bold)
+                                            .multilineTextAlignment(.center)
+                                            .foregroundColor(.white)
+                                    )
+                            }
+                        }.padding(42))
             }
+        }.navigationBarBackButtonHidden(true).navigationBarItems(leading: CustomBackBtn())
+    }
+    struct CustomBackBtn: View {
+        
+        @Environment(\.presentationMode) var presentationMode
+        
+        var body: some View {
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "arrow.left")
+                    Spacer()
+                }
+            }
+        }
     }
 }
 
