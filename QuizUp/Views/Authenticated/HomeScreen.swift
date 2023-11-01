@@ -35,7 +35,7 @@ struct HomeScreen: View {
                 VStack {
                     Text("Välkommen").font(.system(size: 30, design:
                             .rounded)).fontWeight(.heavy).foregroundColor(.white)
-                }.offset(y: -230)
+                }.offset(y: -250)
                 VStack {
                     NavigationLink(destination: GameScreen(), label:  {
                         Rectangle()
@@ -45,7 +45,7 @@ struct HomeScreen: View {
                           .cornerRadius(20)
                           .shadow(radius: 4)
                           .overlay(
-                                Text("Hello")
+                                Text("Spela")
                                     .font(.system(size: 25, design: .rounded))
                                     .fontWeight(.bold)
                                     .multilineTextAlignment(.center)

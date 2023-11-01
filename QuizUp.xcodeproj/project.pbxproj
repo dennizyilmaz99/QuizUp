@@ -117,14 +117,8 @@
 		5994B6DE2ADE816F003732B4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				599113322AD9D629009119B9 /* LandingScreen.swift */,
-				59EC7DB02AD6B4F5000C2CFB /* CreateAccScreen.swift */,
-				59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */,
-				59D7D0A22ADD54FC008DEAD2 /* HomeScreen.swift */,
-				59D7D0AC2ADDB8CA008DEAD2 /* SettingsScreen.swift */,
-				598655742ADFDD6000870AF7 /* GameScreen.swift */,
-				B03A341D2AE57C4300EDFD91 /* PopUpView.swift */,
-				B048D1E82AE9AC830067B111 /* QuizGameScreen.swift */,
+				B0A27F852AF2610400543EC2 /* Authenticated */,
+				B0A27F842AF260F100543EC2 /* Unauthenticated */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -209,6 +203,28 @@
 				59EC7DCB2AD6B4F6000C2CFB /* QuizUpUITestsLaunchTests.swift */,
 			);
 			path = QuizUpUITests;
+			sourceTree = "<group>";
+		};
+		B0A27F842AF260F100543EC2 /* Unauthenticated */ = {
+			isa = PBXGroup;
+			children = (
+				59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */,
+				59EC7DB02AD6B4F5000C2CFB /* CreateAccScreen.swift */,
+				599113322AD9D629009119B9 /* LandingScreen.swift */,
+			);
+			path = Unauthenticated;
+			sourceTree = "<group>";
+		};
+		B0A27F852AF2610400543EC2 /* Authenticated */ = {
+			isa = PBXGroup;
+			children = (
+				59D7D0A22ADD54FC008DEAD2 /* HomeScreen.swift */,
+				59D7D0AC2ADDB8CA008DEAD2 /* SettingsScreen.swift */,
+				598655742ADFDD6000870AF7 /* GameScreen.swift */,
+				B03A341D2AE57C4300EDFD91 /* PopUpView.swift */,
+				B048D1E82AE9AC830067B111 /* QuizGameScreen.swift */,
+			);
+			path = Authenticated;
 			sourceTree = "<group>";
 		};
 		B0B3CDF82ADEB8F0008C5CDB /* Frameworks */ = {
