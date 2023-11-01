@@ -47,7 +47,7 @@ struct LoginScreen: View {
                                 .background(Color(.color4))
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
-                            NavigationLink(destination: HomeScreen(db: DatabaseConfig()), isActive: $isNavigating) {
+                            NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
                                 EmptyView()
                             }
                             Button(action: {

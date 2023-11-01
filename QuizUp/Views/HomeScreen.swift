@@ -2,7 +2,7 @@ import SwiftUI
 
 struct HomeScreen: View {
     
-    @ObservedObject var db: DatabaseConfig
+    @EnvironmentObject var db: DatabaseConfig
     @State var isNavigatingToGameScreen: Bool = false
     @State var isNavigatingToProfileScreen: Bool = false
     @State var showLeaderboard = false
@@ -78,5 +78,5 @@ struct HomeScreen: View {
 }
 
 #Preview {
-    HomeScreen(db: DatabaseConfig())
+    HomeScreen()
 }

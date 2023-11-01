@@ -16,8 +16,6 @@ struct CreateAccScreen: View {
     @State var password: String = ""
     @State var confirmPassword: String = ""
     
-    
-    
     var body: some View {
         ZStack{
             Image("NewBgQuizUp")
@@ -63,7 +61,7 @@ struct CreateAccScreen: View {
                                 .background(Color(.color4))
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
-                            NavigationLink(destination: HomeScreen(db: DatabaseConfig()), isActive: $isNavigating) {
+                            NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
                                 EmptyView()
                             }
                             Button(action: {
