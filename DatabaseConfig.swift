@@ -1,6 +1,7 @@
 import Foundation
 import FirebaseAuth
 import Firebase
+import FirebaseFirestore
 
 /**
  Our CreateAccScreen is depending on this class,

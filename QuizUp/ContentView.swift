@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var users: DatabaseConfig
+   
     
     var body: some View {
         VStack{

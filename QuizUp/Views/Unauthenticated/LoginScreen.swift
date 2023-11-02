@@ -31,24 +31,24 @@ struct LoginScreen: View {
                 Rectangle()
                   .foregroundColor(.clear)
                   .frame(width: 351, height: 329)
-                  .background(.white)
+                  .background(Color("ButtonColor"))
                   .cornerRadius(20)
                   .overlay(
                     VStack (spacing: 25){
                         // Maybe att textFieldStyle to email
-                      TextField("E-post", text: $email)
+                        TextField("", text: $email, prompt: Text("E-post").foregroundColor(Color.color5).font(.system(size: 15)))
                             .padding(8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color("ButtonColor"), lineWidth: 2)
-                            )
+                            .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
+                            .background(Color(.color4))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                         // Maybe change to secureField instead for password
-                      SecureField("Lösenord", text: $password)
+                        SecureField("", text: $password, prompt: Text("Lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
                             .padding(8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color("ButtonColor"), lineWidth: 2)
-                            )
+                            .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
+                            .background(Color(.color4))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                         NavigationLink(destination: HomeScreen(), isActive: $isNavigating) {
                                 EmptyView()
                             }
@@ -66,7 +66,7 @@ struct LoginScreen: View {
                                     .frame(width: 270, height: 56)
                                     .background(Color("ButtonColor"))
                                     .cornerRadius(20)
-                                    .shadow(radius: 4)
+                                    .shadow(color: Color.black.opacity(0.2), radius: 20)
                                     .overlay(
                                         Text("Logga in")
                                             .font(.system(size: 16, design: .rounded))
@@ -75,7 +75,22 @@ struct LoginScreen: View {
                                             .foregroundColor(.white)
                                     )
                             }
-                    }.padding(42)).shadow(radius: 20 )
+                    }.padding(42))
+            }
+        }.navigationBarBackButtonHidden(true).navigationBarItems(leading: CustomBackBtn())
+    }
+    struct CustomBackBtn: View {
+        
+        @Environment(\.presentationMode) var presentationMode
+        
+        var body: some View {
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "arrow.left")
+                    Spacer()
+                }
             }
         }
     }

@@ -1,14 +1,28 @@
 import SwiftUI
 
+struct LoadingView: View {
+    var body: some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+            ProgressView()
+        }
+    }
+}
+
 struct HomeScreen: View {
-    
     @EnvironmentObject var db: DatabaseConfig
     @State var isNavigatingToGameScreen: Bool = false
     @State var isNavigatingToProfileScreen: Bool = false
     @State var showLeaderboard = false
-    
+    @State private var userName: String = ""
+    @State private var isLoading = true
+
     var body: some View {
-            ZStack{
+        ZStack{
+            if isLoading {
+                LoadingView()
+            } else {
                 ZStack {
                     LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
                         .edgesIgnoringSafeArea(.all)
@@ -24,7 +38,7 @@ struct HomeScreen: View {
                         Spacer()
                         Image("Icon5").resizable().aspectRatio(contentMode: .fit).frame(width: 175, height: 175)
                         Spacer()
-                        NavigationLink(destination: ProfileScreen(), isActive: $isNavigatingToProfileScreen) {
+                        NavigationLink(destination: ProfileScreen(userName: $userName), isActive: $isNavigatingToProfileScreen) {
                             EmptyView()
                         }
                         Button(action: {
@@ -34,8 +48,8 @@ struct HomeScreen: View {
                         }.padding()
                     }.offset(y: -340)
                     VStack {
-                        Text("Välkommen").font(.system(size: 26, design:
-                                .rounded)).fontWeight(.heavy).foregroundColor(.white)
+                        Text("Välkommen \(userName)!")
+                            .font(.system(size: 26, design: .rounded)).fontWeight(.heavy).foregroundColor(.white)
                             .frame(maxWidth: .infinity, alignment: .leading).padding()
                     }.offset(y: -230)
                     VStack {
@@ -68,16 +82,39 @@ struct HomeScreen: View {
                         }
                     }.offset(y: -80)
                 }.navigationBarBackButtonHidden(true).blur(radius: showLeaderboard ? 1.5 : 0).background(showLeaderboard ? Color.black.opacity(1) : Color.clear )
-                VStack {
-                    if showLeaderboard {
-                      LeaderBoardView(showLeaderboard: $showLeaderboard)
+            }
+            VStack {
+                if showLeaderboard {
+                    LeaderBoardView(showLeaderboard: $showLeaderboard)
+                }
+            }
+        }
+        .onAppear(perform: {
+            fetchUserData()
+            isLoading = true
+        })
+    }
+
+    func fetchUserData() {
+        if let user = db.currentUser {
+            let uid = user.uid
+            let docRef = db.db.collection(db.USER_DATA_COLLECTION).document(uid)
+            
+            docRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    if let data = document.data(){
+                        if let name = data["name"] as? String {
+                            DispatchQueue.main.async {
+                                self.userName = name
+                                self.isLoading = false
+                            }
                         }
                     }
+                } else {
+                    print("Dokumentet existerar inte")
+                }
             }
         }
     }
-struct HomeScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeScreen().environmentObject(DatabaseConfig())
-    }
+
 }

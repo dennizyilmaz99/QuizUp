@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct ProfileScreen: View {
+    @EnvironmentObject var db: DatabaseConfig
+    @Binding var userName: String
+    
     var body: some View {
         ZStack {
             Image("ProfileScreenBg2")
@@ -21,7 +24,7 @@ struct ProfileScreen: View {
                     )
                     .padding(.top, 25)
                 
-                Text("Räven").font(.system(size: 25, design: .rounded)).fontWeight(.bold).foregroundColor(.white).padding(5)
+                Text("\(userName)").font(.system(size: 25, design: .rounded)).fontWeight(.bold).foregroundColor(.white).padding(5)
                 Spacer()
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
             Spacer()
@@ -92,7 +95,7 @@ struct ProfileScreen: View {
                         )
                 }
                 Button(action: {
-                    
+                    handleLogOut()
                 }) {
                     Rectangle()
                         .foregroundColor(.clear)
@@ -122,6 +125,16 @@ struct ProfileScreen: View {
                 UINavigationBar.appearance().standardAppearance = appearance
             }
     }
+    func handleLogOut() {
+        do {
+            try db.auth.signOut()
+            print("Logged out user")
+            // Återställ eventuella nödvändiga variabler eller tillstånd här
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
+
 }
 
 struct Line: Shape {
@@ -150,5 +163,6 @@ struct CustomBackBtn: View {
 }
 
 #Preview {
-    ProfileScreen()
+    ProfileScreen(userName: .constant(""))
 }
+
