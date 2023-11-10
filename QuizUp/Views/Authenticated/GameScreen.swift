@@ -19,37 +19,26 @@ struct GameScreen: View {
     CategoriesData(categorieName: "Teknik", categorieNumber: 18)
     ]
     
- /*   let categoryIDs: [String: Int] = [
-           "Sport": 21,
-           "Historia": 23,
-           "Geografi": 22,
-           "Teknik": 18
-       ] */
-    
     var body: some View {
         NavigationView{
             ZStack{
-                Image("NewBgQuizUp")
-                    .resizable()
-                    .scaledToFill()
+                LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                
+    
                 Text("Välj en kategori")
-                    .font(.system(size: 36, design:
+                    .font(.system(size: 33, design:
                             .rounded)).fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)
                     .offset(y: -300)
-                    .blur(radius: showMyPopup ? 5 : 0) // If PopupView is true -> blur component
-                
-                
                     VStack(spacing: 40) {
                         // To render all categories in our array
                         ForEach(categories) { category in
                             Button(action: { // Creates a button for each category
                               //  self.selectedCategory = category.categorieName
-                                self.showMyPopup = true
+                                withAnimation(Animation.easeOut(duration: 0.2)) {
+                                showMyPopup.toggle()
+                            }
                                 self.selectedCategoryNumber = category.categorieNumber
                                 self.selectedCategoryName = category.categorieName
                             }) { // Creates an instance of ButtonView and passes categorieName as a parameter
@@ -58,7 +47,6 @@ struct GameScreen: View {
                             }
                         }
                     }
-                    .blur(radius: showMyPopup ? 5 : 0)
                     .padding()
                     .offset(y: 50)
                 
@@ -66,13 +54,29 @@ struct GameScreen: View {
                  PopUpView(showMyPopup: $showMyPopup, selectedCategoryName: $selectedCategoryName, selectedCategoryNumber: $selectedCategoryNumber )
                }
             }
-        }
+        }.navigationBarBackButtonHidden(true).navigationBarItems(leading: CustomBackBtn())
     }
     
    
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
             GameScreen(selectedCategoryNumber: 21, selectedCategoryName: "Sport")
+        }
+    }
+    
+    struct CustomBackBtn: View {
+        
+        @Environment(\.presentationMode) var presentationMode
+        
+        var body: some View {
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "arrow.left").foregroundStyle(.white)
+                    Spacer()
+                }
+            }
         }
     }
     
@@ -83,13 +87,11 @@ struct GameScreen: View {
         let categorieName: String
         
         var body: some View {
-           
                 Rectangle()
                     .foregroundColor(.clear)
-                    .frame(width: 325, height: 90)
+                    .frame(width: 320, height: 80)
                     .background(Color("ButtonColor"))
                     .cornerRadius(20)
-                    .shadow(radius: 15, x: -1, y: -3)
                     .overlay(
                         Text(categorieName)
                             .font(.system(size: 23, design: .rounded))

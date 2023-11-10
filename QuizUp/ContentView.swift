@@ -3,7 +3,6 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var users: DatabaseConfig
-   
     
     var body: some View {
         VStack{
@@ -11,12 +10,12 @@ struct ContentView: View {
                 NavigationStack{
                     HomeScreen()
                 }
-              
+                
             } else {
                 NavigationStack{
                     LandingScreen()
                 }
-              
+                
             }
         }
     }

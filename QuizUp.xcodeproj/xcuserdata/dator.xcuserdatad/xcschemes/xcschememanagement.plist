@@ -28,7 +28,25 @@
 		<key>QuizUp.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>59EC7DAA2AD6B4F5000C2CFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>59EC7DBA2AD6B4F6000C2CFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>59EC7DC42AD6B4F6000C2CFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

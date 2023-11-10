@@ -3,10 +3,11 @@ import FirebaseAuth
 import Firebase
 import FirebaseFirestore
 
-/**
- Our CreateAccScreen is depending on this class,
- therefore it extends @ObservableObject and eventually @Published variables
-**/
+struct UserDetails: Identifiable, Hashable {
+    var id = UUID()
+    var name: String
+    var score: Int
+}
 
 class DatabaseConfig: ObservableObject {
     
@@ -14,24 +15,139 @@ class DatabaseConfig: ObservableObject {
     var auth = Auth.auth() // Creating our first instance of our authentication
     var USER_DATA_COLLECTION = "users" // the name of our collection in firestore -> to reduce risks of spelling misstakes
     var dbListener: ListenerRegistration? // Represents our listener
+    var isInitialPrint = true
+    @Published var users: [UserDetails] = []
+    @Published var userName: String = ""
+    @Published var didFetchData: Bool = false
     @Published var currentUser: User?
     @Published var currentUserData: UserData?
+    @Published var historiaValue: Int = 0
+    @Published var sportValue: Int = 0
+    @Published var geografiValue: Int = 0
+    @Published var teknikValue: Int = 0
     
     
     init() {
         auth.addStateDidChangeListener { auth, user in
-            if let user = user { // if a user exists -> add current user to 'currentUser' -> start listening
-                print("A user has logged in with email: \(user.email ?? "No Email")")
+            if let user = user {
+                if self.isInitialPrint {
+                    print("A user has logged in with email: \(user.email ?? "No Email")")
+                    self.isInitialPrint = false
+                }
                 self.currentUser = user
-               // isLoggedIn = true
+                // isLoggedIn = true
                 //self.startListeningToDb()
-            } else { // If user does not exist (logged out) -> remove listener -> clear data
+            } else {
+                if self.isInitialPrint {
+                    print("User has logged out!")
+                    self.isInitialPrint = false
+                }
                 self.dbListener?.remove()
                 self.dbListener = nil
                 self.currentUserData = nil
                 self.currentUser = nil
-            //    isLoggedIn = false
-                print("User has logged out!")
+                // isLoggedIn = false
+            }
+        }
+    }
+    
+    func updateScoreInFirestore(categoryName: String, score: Int, userId: String) {
+        let scoreDataRef = db.collection("users").document(userId)
+        scoreDataRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                var categoryScores = document.data()?["scores"] as? [String: Int] ?? CategoryScore().scores
+                if let currentScore = categoryScores[categoryName] {
+                    categoryScores[categoryName] = currentScore + score
+                }
+                
+                scoreDataRef.updateData([
+                    "scores": categoryScores
+                ]) { error in
+                    if let error = error {
+                        print("Error updating document: \(error)")
+                    } else {
+                        print("Document successfully updated!")
+                    }
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
+    
+    func fetchCurrentUserDetails() {
+        if let user = currentUser {
+            let uid = user.uid
+            let docRef = db.collection(USER_DATA_COLLECTION).document(uid)
+            docRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    if let data = document.data(){
+                        if let name = data["name"] as? String {
+                            DispatchQueue.main.async {
+                                self.userName = name
+                                self.didFetchData = true
+                            }
+                        }
+                    }
+                } else {
+                    print("Dokumentet existerar inte")
+                }
+            }
+        }
+    }
+    
+    func fetchUsersDetails() {
+        db.collection("users").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                var userList: [UserDetails] = []
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    if let name = data["name"] as? String, let scores = data["scores"] as? [String: Int] {
+                        var totalScore = 0
+                        for (_, score) in scores {
+                            totalScore += score
+                        }
+                        let userDetails = UserDetails(name: name, score: totalScore)
+                        userList.append(userDetails)
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.users = userList
+                    self.didFetchData = true
+                }
+            }
+        }
+    }
+    
+    func fetchProfileUserData() {
+        if let user = currentUser {
+            let uid = user.uid
+            let docRef = db.collection(USER_DATA_COLLECTION).document(uid)
+            
+            docRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    if let data = document.data() {
+                        if let scores = data["scores"] as? [String: Int] {
+                            DispatchQueue.main.async {
+                                self.historiaValue = scores["Historia"] ?? 0
+                                self.teknikValue = scores["Teknik"] ?? 0
+                                self.sportValue = scores["Sport"] ?? 0
+                                self.geografiValue = scores["Geografi"] ?? 0
+                                self.didFetchData = true
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self.historiaValue = 0
+                                self.teknikValue = 0
+                                self.sportValue = 0
+                                self.geografiValue = 0
+                                self.didFetchData = true
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -63,7 +179,7 @@ class DatabaseConfig: ObservableObject {
         }
         return success
     }
-    
+
     func logInUser(email: String, password: String) -> Bool {
         
         var success = false
@@ -85,50 +201,20 @@ class DatabaseConfig: ObservableObject {
         }
         return success // return the value of success
     }
-    /*
-    func startListeningToDb() {
-        
-        guard let user = currentUser else {return} // checks if there even is a user, otherwise it won't listen
-        
-        // Listens for changes in our collections documents that belongs to the current user
-        dbListener = db.collection(self.USER_DATA_COLLECTION).document(user.uid).addSnapshotListener{
-            snapshot, error in
-            
-            // If there is any error, print it
-            if let error = error {
-                print("Error occured brother: \(error.localizedDescription)")
-                return
+    
+    func handleLogOut() {
+        do {
+            try auth.signOut()
+            print("Logged out user")
+            DispatchQueue.main.async { [weak self] in
+                self?.didFetchData = false
+                print(self?.didFetchData ?? false)
             }
-            // Check if there is any new information from the snapshot
-            guard let documentSnapshot = snapshot else {return}
-            
-            // trying to convert the data from snapshot into our UserData
-            let result = Result {
-                try documentSnapshot.data(as: UserData.self)
-            }
-            
-            switch result {
-                // IF SUCCESS
-            case .success(let userData):
-                self.currentUserData = userData
-                // IF ERROR
-            case .failure(let error):
-                print("brother, error occured: \(error.localizedDescription)")
-            }
+            // Återställ eventuella nödvändiga variabler eller tillstånd här
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
         }
     }
-    */
-    func isUserLoggedIn() -> Bool {
-        var isLoggedIn = false
-
-        // Setting up our listener for changes in the user's authentication
-      
-
-        return isLoggedIn
-    }
-
-    
-
 }
 
 
