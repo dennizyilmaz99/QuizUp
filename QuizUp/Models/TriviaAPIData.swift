@@ -16,12 +16,3 @@ struct Question: Decodable {
     var correctAnswer: String
     var incorrectAnswers: [String]
 }
-
-
-
-
-    
-    
-
-
-

@@ -10,12 +10,12 @@ struct ContentView: View {
                 NavigationStack{
                     HomeScreen()
                 }
-              
+                
             } else {
                 NavigationStack{
                     LandingScreen()
                 }
-              
+                
             }
         }
     }
