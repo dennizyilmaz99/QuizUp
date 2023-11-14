@@ -39,24 +39,24 @@ struct LeaderboardView: View {
                             }.padding(.top, 10).padding()
                             ScrollView {
                                 VStack {
-                                    ForEach(db.users, id: \.id) { user in
+                                    ForEach(Array(zip(db.users.sorted {$0.score > $1.score }, 1...)), id: \.0.id) { (user, rank) in
                                             Rectangle()
                                                 .foregroundColor(.clear)
-                                                .frame(width: 270, height: 50)
-                                                .background(.black)
+                                                .frame(width: 270, height: 60)
+                                                .background(Color("HomeScreenGradientDark"))
                                                 .cornerRadius(20)
                                                 .overlay(
                                                     HStack {
-                                                        Spacer()
-                                                        Text(user.name)
+                                                        Text("\(rank)").font(.system(.title3, design: .rounded)).foregroundStyle(.white).padding()
+                                                        Text(user.selectedIcon).font(.title)
+                                                        Text(user.name).font(.system(.title3, design: .rounded))
                                                             .foregroundColor(.white)
                                                         Spacer()
-                                                        Text("\(user.score)")
-                                                            .foregroundColor(.white)
+                                                        Text("\(user.score)").font(.system(.title3, design: .rounded))
+                                                            .foregroundColor(.white).padding().fontWeight(.bold)
                                                     }
-                                                )
-                                                .padding(2)
-                                        }
+                                                ).padding(2)
+                                    }
                                 }.onAppear {
                                     db.fetchUsersDetails()
                                 }

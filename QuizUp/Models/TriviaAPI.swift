@@ -25,9 +25,7 @@ class TriviaAPI: ObservableObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         // ett asynkront anrop till API:et
-        print("Startar API-anrop...")
         let (data, response) = try await URLSession.shared.data(for: request)
-        print("Fick svar från API...")
         
         // Kollar om responsen vi fick är framgångsrikt, om inte kastar vi ett felmeddelande
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
@@ -45,7 +43,6 @@ class TriviaAPI: ObservableObject {
             // uppdatera QnAData med de avkodade trivia frågorna, om det inte lyckades kasta ett felmeddelande
             DispatchQueue.main.sync {
                 self.QnAData = questionResponse.results
-                print("Antal frågor hämtade: \(self.QnAData.count)")
             }
         } catch {
             print("Fel vid avkodning av data från servern.")

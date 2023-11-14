@@ -7,6 +7,7 @@ struct UserDetails: Identifiable, Hashable {
     var id = UUID()
     var name: String
     var score: Int
+    var selectedIcon: String
 }
 
 class DatabaseConfig: ObservableObject {
@@ -25,7 +26,12 @@ class DatabaseConfig: ObservableObject {
     @Published var sportValue: Int = 0
     @Published var geografiValue: Int = 0
     @Published var teknikValue: Int = 0
-    
+    @Published var selectedIcon: String = ""
+    @Published var alertMessage = ""
+    @Published var name: String = ""
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var confirmPassword: String = ""
     
     init() {
         auth.addStateDidChangeListener { auth, user in
@@ -59,7 +65,6 @@ class DatabaseConfig: ObservableObject {
                 if let currentScore = categoryScores[categoryName] {
                     categoryScores[categoryName] = currentScore + score
                 }
-                
                 scoreDataRef.updateData([
                     "scores": categoryScores
                 ]) { error in
@@ -104,14 +109,21 @@ class DatabaseConfig: ObservableObject {
                 var userList: [UserDetails] = []
                 for document in querySnapshot!.documents {
                     let data = document.data()
-                    if let name = data["name"] as? String, let scores = data["scores"] as? [String: Int] {
-                        var totalScore = 0
-                        for (_, score) in scores {
-                            totalScore += score
-                        }
-                        let userDetails = UserDetails(name: name, score: totalScore)
-                        userList.append(userDetails)
+                    let name = data["name"] as? String ?? "No Name"
+                    
+                    // Fetching the selectedIcon, defaulting to an empty string if not present
+                    let selectedIcon = data["selectedIcon"] as? String ?? ""
+                    
+                    // Fetching the scores dictionary, defaulting to an empty dictionary if not present
+                    let scores = data["scores"] as? [String: Int] ?? [:]
+                    
+                    var totalScore = 0
+                    for (_, score) in scores {
+                        totalScore += score
                     }
+                    
+                    let userDetails = UserDetails(name: name, score: totalScore, selectedIcon: selectedIcon)
+                    userList.append(userDetails)
                 }
                 DispatchQueue.main.async {
                     self.users = userList
@@ -125,10 +137,17 @@ class DatabaseConfig: ObservableObject {
         if let user = currentUser {
             let uid = user.uid
             let docRef = db.collection(USER_DATA_COLLECTION).document(uid)
-            
+
             docRef.getDocument { (document, error) in
                 if let document = document, document.exists {
                     if let data = document.data() {
+                        if let selectedIcon = data["selectedIcon"] as? String {
+                            DispatchQueue.main.async {
+                                self.selectedIcon = selectedIcon
+                                print("Get icon \(selectedIcon)")
+                            }
+                        }
+
                         if let scores = data["scores"] as? [String: Int] {
                             DispatchQueue.main.async {
                                 self.historiaValue = scores["Historia"] ?? 0
@@ -151,55 +170,129 @@ class DatabaseConfig: ObservableObject {
             }
         }
     }
-    
-    func registerUser(name: String, email: String, password: String) -> Bool {
-        
-        var success = false // A variable to keep track if create account was successfull or not
-        
-        // Using Firebase Authentication's createUser func to store new user with the provided email and password
-        auth.createUser(withEmail: email, password: password) { authResult, error in
+
+    func registerUser(name: String, email: String, password: String, selectedIcon: String, completion: @escaping (Bool, String) -> Void) {
+        auth.createUser(withEmail: email, password: password) { [weak self] authResult, error in
+            guard let self = self else { return }
             
-            // IF ERROR
-            if let error = error { // If we catch an error, set success to false, print error
-                print("an error occured: \(error.localizedDescription)")
-                success = false
+            if let error = error as NSError? {
+                DispatchQueue.main.async {
+                    // Kontrollera specifika felkoder
+                    if error.domain == AuthErrorCode.errorDomain {
+                        switch error.code {
+                        case AuthErrorCode.emailAlreadyInUse.rawValue:
+                            completion(false, "E-postadressen används redan av ett annat konto.")
+                            self.alertMessage = "E-postadressen används redan av ett annat konto."
+                        case AuthErrorCode.weakPassword.rawValue:
+                            completion(false, "Lösenordet måste vara minst 6 tecken långt")
+                            self.alertMessage = "Lösenordet måste vara minst 6 tecken långt"
+                        default:
+                            completion(false, "\(error.localizedDescription)")
+                            self.alertMessage = "\(error.localizedDescription)"
+                        }
+                    }
+                }
                 return
             }
-            // IF SUCCESS
+
+            // Hantera användarregistrering
             if let authResult = authResult {
-                let newUserData = UserData(name: name, email: email, password: password) // newUserData receive the provided email and password
-                
-                do { // Store user in database
+                let newUserData = UserData(name: name, email: email, password: password, selectedIcon: selectedIcon)
+                do {
                     try self.db.collection(self.USER_DATA_COLLECTION).document(authResult.user.uid).setData(from: newUserData)
-                } catch {
-                    print("Error: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        completion(true, "Konto skapat framgångsrikt.")
+                    }
+                } catch let databaseError {
+                    DispatchQueue.main.async {
+                        completion(false, "Databasfel: \(databaseError.localizedDescription)")
+                    }
                 }
-                success = true
             }
         }
-        return success
+    }
+    
+    func validateCreateScreenFields() -> Bool {
+        if name.isEmpty && email.isEmpty && password.isEmpty && confirmPassword.isEmpty && selectedIcon.isEmpty {
+            alertMessage = "Vänligen fyll i alla fält"
+            return false
+        }
+        if name.isEmpty {
+            alertMessage = "Ange ditt namn"
+            return false
+        }
+        if email.isEmpty {
+            alertMessage = "Ange din e-postadress"
+            return false
+        }
+        if password.isEmpty {
+            alertMessage = "Ange ditt lösenord"
+            return false
+        }
+        if confirmPassword.isEmpty {
+            alertMessage = "Bekräfta ditt lösenord"
+            return false
+        }
+        if confirmPassword != password {
+            alertMessage = "Lösenordet matchar inte"
+            return false
+        }
+        if selectedIcon.isEmpty {
+            alertMessage = "Välj en ikon"
+            return false
+        }
+        return true
+    }
+    
+    func validateLogInFields() -> Bool {
+        if email.isEmpty && password.isEmpty {
+            alertMessage = "Vänligen fyll i alla fält"
+            return false
+        }
+        if email.isEmpty {
+            alertMessage = "Ange din e-postadress"
+            return false
+        }
+        if password.isEmpty {
+            alertMessage = "Ange ditt lösenord"
+            return false
+        }
+        return true
     }
 
-    func logInUser(email: String, password: String) -> Bool {
+    func logInUser(email: String, password: String, completion: @escaping (Bool, String) -> Void) {
         
-        var success = false
-        
-        // Try to sign in the user with the provided email and password
-        auth.signIn(withEmail: email, password: password) { authDataResult, error in
+        auth.signIn(withEmail: email, password: password) { [weak self] authDataResult, error in
+            guard let self = self else { return }
             
-            // IF ERROR
-            if let error = error {
-                print("Error logging in!")
-                print(error)
-                success = false
-            }
-            // IF SUCCESS - check if there is any data in authDataResult, if there is, it means log in was successfull.
-            if let _ = authDataResult {
-                print("Successfully logged in!")
-                success = true
+            DispatchQueue.main.async {
+                if let error = error as NSError? {
+                    DispatchQueue.main.async {
+                        let errorMessage = error.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
+                                        if errorMessage.contains("INVALID_LOGIN_CREDENTIALS") {
+                                            // Hantera specifikt fel för ogiltiga inloggningsuppgifter
+                                            completion(false, "Inloggningsuppgifterna är ogiltiga. Kontrollera din e-post och lösenord och försök igen.")
+                                            self.alertMessage = "Inloggningsuppgifterna är ogiltiga. Kontrollera din e-post och lösenord och försök igen."
+                                        }
+                        if error.domain == AuthErrorCode.errorDomain && error.code == AuthErrorCode.userNotFound.rawValue {
+                            completion(false, "Användaren existerar inte.")
+                            self.alertMessage = "Användaren existerar inte."
+                        }; if error.domain == AuthErrorCode.errorDomain && error.code == AuthErrorCode.wrongPassword.rawValue || error.code == AuthErrorCode.invalidEmail.rawValue {
+                            completion(false, "Fel e-post eller lösenord. Försök igen.")
+                            self.alertMessage = "Fel lösenord. Försök igen."
+                        } else {
+                            completion(false, "Ett oväntat fel inträffade: \(error.localizedDescription)")
+                            self.alertMessage = "Ett oväntat fel inträffade: \(error.localizedDescription)"
+                            print(error)
+                        }
+                    }
+                    return
+                }
+                if authDataResult != nil {
+                    completion(true, "Inloggning lyckades.")
+                }
             }
         }
-        return success // return the value of success
     }
     
     func handleLogOut() {
