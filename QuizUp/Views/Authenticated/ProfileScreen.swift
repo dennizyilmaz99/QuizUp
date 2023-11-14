@@ -35,7 +35,7 @@ struct ProfileScreen: View {
                                 .frame(width: 110, height: 110)
                                 .shadow(radius: 10)
                                 .overlay(
-                                    Text("🦊").font(.system(size: 70)).position(x: 55, y: 55)
+                                    Text(db.selectedIcon).font(.system(size: 70)).position(x: 55, y: 55)
                                 )
                                 .overlay(
                                     Circle()
@@ -79,23 +79,6 @@ struct ProfileScreen: View {
                         VStack(spacing: 25) {
                             Text("Inställningar").font(.system(size: 18)).fontWeight(.heavy).foregroundColor(.white).padding(.leading, -148)
                             Button(action: {
-                                
-                            }) {
-                                Rectangle()
-                                    .foregroundColor(.clear)
-                                    .frame(width: 300, height: 75)
-                                    .background(Color("ButtonColor"))
-                                    .cornerRadius(20)
-                                    .shadow(radius: 1)
-                                    .overlay(
-                                        HStack {
-                                            Text("Konto-inställningar").font(.system(size: 14)).fontWeight(.bold).foregroundColor(.white)
-                                            Spacer()
-                                            Image(systemName: "arrow.right").font(.headline).foregroundStyle(.white)
-                                        }.padding(20)
-                                    )
-                            }
-                            Button(action: {
                                 showingAlert = true
                             }) {
                                 Rectangle()
@@ -112,22 +95,16 @@ struct ProfileScreen: View {
                                         }.padding(20)
                                     )
                             }
-                        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding()
                     }
                 }
             }
         }.navigationBarBackButtonHidden(true)
             .navigationBarTitle("Profil")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarColor(backgroundColor: .clear, titleColor: .white)
+
             .navigationBarItems(leading: CustomBackBtn())
-            .onAppear {
-                let appearance = UINavigationBarAppearance()
-                appearance.configureWithTransparentBackground()
-                appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-                UINavigationBar.appearance().scrollEdgeAppearance = appearance
-                UINavigationBar.appearance().compactAppearance = appearance
-                UINavigationBar.appearance().standardAppearance = appearance
-            }.alert(isPresented: $showingAlert) {
+            .alert(isPresented: $showingAlert) {
                 Alert(
                     title: Text("Logga ut"),
                     message: Text("Är du säker att du vill logga ut?"),
@@ -139,8 +116,7 @@ struct ProfileScreen: View {
                 )
             }.onAppear(perform: {
                 db.fetchProfileUserData()
-                
-            })
+        })
     }
 }
 
@@ -168,6 +144,48 @@ struct CustomBackBtn: View {
         }
     }
 }
+
+struct NavigationBarModifier: ViewModifier {
+
+    var backgroundColor: UIColor?
+    var titleColor: UIColor?
+
+    init(backgroundColor: UIColor?, titleColor: UIColor?) {
+        self.backgroundColor = backgroundColor
+        let coloredAppearance = UINavigationBarAppearance()
+        coloredAppearance.configureWithTransparentBackground()
+        coloredAppearance.backgroundColor = backgroundColor
+        coloredAppearance.titleTextAttributes = [.foregroundColor: titleColor ?? .white]
+        coloredAppearance.largeTitleTextAttributes = [.foregroundColor: titleColor ?? .white]
+
+        UINavigationBar.appearance().standardAppearance = coloredAppearance
+        UINavigationBar.appearance().compactAppearance = coloredAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+    }
+
+    func body(content: Content) -> some View {
+        ZStack{
+            content
+            VStack {
+                GeometryReader { geometry in
+                    Color(self.backgroundColor ?? .clear)
+                        .frame(height: geometry.safeAreaInsets.top)
+                        .edgesIgnoringSafeArea(.top)
+                    Spacer()
+                }
+            }
+        }
+    }
+}
+
+extension View {
+
+    func navigationBarColor(backgroundColor: UIColor?, titleColor: UIColor?) -> some View {
+        self.modifier(NavigationBarModifier(backgroundColor: backgroundColor, titleColor: titleColor))
+    }
+
+}
+    
 
 #Preview {
     ProfileScreen()

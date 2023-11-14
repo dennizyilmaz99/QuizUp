@@ -7,4 +7,5 @@ struct UserData: Codable, Identifiable {
     var name: String?
     var email: String?
     var password: String?
+    var selectedIcon: String?
 }

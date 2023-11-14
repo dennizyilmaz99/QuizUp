@@ -52,7 +52,7 @@ struct HomeScreen: View {
                       }.edgesIgnoringSafeArea(.all)
                       VStack {
                           Text("Välkommen \(db.userName)!")
-                              .font(.system(size: 26, design: .rounded)).fontWeight(.heavy).foregroundColor(.white)
+                              .font(.system(size: 24, design: .rounded)).fontWeight(.heavy).foregroundColor(.white)
                               .frame(maxWidth: geometry.size.width, alignment: .leading).padding()
                       }.offset(y: -geometry.size.height * 0.3)
                       VStack {

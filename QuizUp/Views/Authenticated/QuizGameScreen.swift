@@ -25,17 +25,27 @@ struct QuizGameScreen: View {
     @State var hasUserAnswered = false
     @State var navigatingToHomeScreen = false
     @State var cachedShuffledAnswers = [String]()
-
+    @State var showMenu = false
+    
     var body: some View {
-        
-        ZStack{
+        ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                Image("Icon5").resizable().aspectRatio(contentMode:.fit).frame(width: 175, height: 175)
+                HStack {
+                    Spacer()
+                    Image("Icon5").resizable().aspectRatio(contentMode:.fit).frame(width: 175, height: 175).padding(.leading, 38)
+                    Spacer()
+                    Button(action: {
+                        withAnimation(.easeIn){
+                            showMenu = true
+                        }
+                    }) {
+                        Image("menu-icon").resizable().aspectRatio(contentMode:.fit).frame(width: 30, height: 30).padding(.trailing, 10).foregroundStyle(.white)
+                    }
+                }
                 Spacer()
             }.edgesIgnoringSafeArea(.all)
-            
             Text(currentQuestionText)
                 .font(.system(size: 23, design:
                         .rounded)).fontWeight(.bold)
@@ -67,48 +77,48 @@ struct QuizGameScreen: View {
                         .offset(y: -100)
                 }
                 VStack {
-                ForEach(cachedShuffledAnswers, id: \.self) { shuffledAnswer in
-                    Button( action: {
-                        if answerSelected == nil {
-                            if let decodedAnswer = shuffledAnswer.removingPercentEncoding {
-                                answerSelected = decodedAnswer.removingPercentEncoding
-                                hasUserAnswered = true }
-                            if shuffledAnswer.removingPercentEncoding == api.QnAData[currentQuestionIndex].correctAnswer.removingPercentEncoding {
-                                
-                                answerSelected = shuffledAnswer.removingPercentEncoding
-                                
-                                
-                                if let userAnswer = answerSelected?.removingPercentEncoding {
-                                    if userAnswer == api.QnAData[currentQuestionIndex].correctAnswer.removingPercentEncoding {
-                                        score += 1
-                                        print("Correct answer, your score: \(score)")
-                                    } else {
-                                        print("Wrong answer, your score: \(score)")
+                    ForEach(cachedShuffledAnswers, id: \.self) { shuffledAnswer in
+                        Button( action: {
+                            if answerSelected == nil {
+                                if let decodedAnswer = shuffledAnswer.removingPercentEncoding {
+                                    answerSelected = decodedAnswer.removingPercentEncoding
+                                    hasUserAnswered = true }
+                                if shuffledAnswer.removingPercentEncoding == api.QnAData[currentQuestionIndex].correctAnswer.removingPercentEncoding {
+                                    
+                                    answerSelected = shuffledAnswer.removingPercentEncoding
+                                    
+                                    
+                                    if let userAnswer = answerSelected?.removingPercentEncoding {
+                                        if userAnswer == api.QnAData[currentQuestionIndex].correctAnswer.removingPercentEncoding {
+                                            score += 1
+                                            print("Correct answer, your score: \(score)")
+                                        } else {
+                                            print("Wrong answer, your score: \(score)")
+                                        }
                                     }
+                                } else {
+                                    print("wrong answer, player score: \(score)")
                                 }
-                            } else {
-                                print("wrong answer, player score: \(score)")
                             }
+                        })
+                        {
+                            Text(shuffledAnswer)
+                                .font(.system(size: 20, design: .rounded))
+                                .foregroundColor(answerSelected == shuffledAnswer ? .white : .purple)
+                                .frame(width: 300, alignment: .leading)
+                                .padding()
+                                .background(
+                                    answerSelected == shuffledAnswer.removingPercentEncoding ?
+                                    (shuffledAnswer == api.QnAData[currentQuestionIndex].correctAnswer.removingPercentEncoding ? Color.green : Color.red) :
+                                        Color.white
+                                )
+                                .fontWeight(.bold)
+                                .cornerRadius(10)
+                            
                         }
-                    })
-                    {
-                        Text(shuffledAnswer)
-                            .font(.system(size: 20, design: .rounded))
-                            .foregroundColor(answerSelected == shuffledAnswer ? .white : .purple)
-                            .frame(width: 300, alignment: .leading)
-                            .padding()
-                            .background(
-                                answerSelected == shuffledAnswer.removingPercentEncoding ?
-                                (shuffledAnswer == api.QnAData[currentQuestionIndex].correctAnswer.removingPercentEncoding ? Color.green : Color.red) :
-                                    Color.white
-                            )
-                            .fontWeight(.bold)
-                            .cornerRadius(10)
-                        
+                        .disabled(hasUserAnswered)
+                        .disabled(isGameCompleted)
                     }
-                    .disabled(hasUserAnswered)
-                    .disabled(isGameCompleted)
-                }
                 }.padding(20)
                 Button(action: {
                     if hasUserAnswered {
@@ -118,26 +128,23 @@ struct QuizGameScreen: View {
                         
                     }
                 }, label: {
-                        Text(isGameCompleted ? "Klar" : "Nästa")
-                            .font(.system(size: 20, design: .rounded))
-                            .foregroundColor(.purple)
-                            .padding(40)
-                            .background(Color.white)
-                            .fontWeight(.bold)
-                            .cornerRadius(10)
+                    Text(isGameCompleted ? "Klar" : "Nästa")
+                        .font(.system(size: 20, design: .rounded))
+                        .foregroundColor(.purple)
+                        .padding(40)
+                        .background(Color.white)
+                        .fontWeight(.bold)
+                        .cornerRadius(10)
                 })
                 .disabled(!hasUserAnswered)
                 .onAppear {
                     self.cachedShuffledAnswers = shuffleAnswers()
                 }
-            }.onAppear {
-                print(api.QnAData)
             }
-            
             .alert(isPresented: $isGameCompleted) {
                 Alert(
-                    title: Text("Game over"),
-                    message: Text("Your score was \(score) out of 10"),
+                    title: Text("Avslutat spel"),
+                    message: Text("Din poäng är \(score) utav 10"),
                     primaryButton: .default(Text("Spela igen")) {
                         restartGame()
                         if let userID = db.auth.currentUser?.uid {
@@ -146,7 +153,7 @@ struct QuizGameScreen: View {
                     },
                     secondaryButton: .default(Text("Avsluta")) {
                         withAnimation(.easeOut){
-                            goToHomeScreen()
+                            navigatingToHomeScreen = true
                         }
                         if let userID = db.auth.currentUser?.uid {
                             db.updateScoreInFirestore(categoryName: self.selectedCategoryName, score: self.score, userId: userID)
@@ -155,27 +162,27 @@ struct QuizGameScreen: View {
                 )
             }
             if navigatingToHomeScreen {
-                HomeScreen()
-            }
-        }.task {
-                
-                do {
-                    try await api.getQnAData(selectedCategoryNumber: selectedCategoryNumber, selectedDifficultyInPopup: selectedDifficultyInPopup)
-                    cachedShuffledAnswers = shuffleAnswers()
-                } catch APIErrors.invalidData {
-                    print("Invalid Data")
-                } catch APIErrors.invalidURL {
-                    print("Invalid Url")
-                } catch APIErrors.invalidResponse {
-                    print("Invalid Response")
-                } catch {
-                    print("General error")
+                withAnimation(.easeOut){
+                    HomeScreen()
                 }
             }
-    }
-    
-    func goToHomeScreen() {
-        navigatingToHomeScreen = true
+            if showMenu {
+                MenuPopUpView(showMenu: $showMenu, navigatingToHomeScreen: $navigatingToHomeScreen)
+            }
+        }.navigationBarBackButtonHidden().task {
+            do {
+                try await api.getQnAData(selectedCategoryNumber: selectedCategoryNumber, selectedDifficultyInPopup: selectedDifficultyInPopup)
+                cachedShuffledAnswers = shuffleAnswers()
+            } catch APIErrors.invalidData {
+                print("Invalid Data")
+            } catch APIErrors.invalidURL {
+                print("Invalid Url")
+            } catch APIErrors.invalidResponse {
+                print("Invalid Response")
+            } catch {
+                print("General error")
+            }
+        }
     }
     
     func restartGame() {
@@ -189,11 +196,11 @@ struct QuizGameScreen: View {
         cachedShuffledAnswers = shuffleAnswers()
         getNewQuestions()
     }
+    
     func getNewQuestions() {
         Task {
             do {
                 try await api.getQnAData(selectedCategoryNumber: selectedCategoryNumber, selectedDifficultyInPopup: selectedDifficultyInPopup)
-                
                 // Uppdatera svarsalternativen med de nya frågorna
                 cachedShuffledAnswers = shuffleAnswers()
             } catch APIErrors.invalidData {
@@ -207,6 +214,7 @@ struct QuizGameScreen: View {
             }
         }
     }
+    
     func shuffleAnswers() -> [String] {
         
         if currentQuestionIndex < api.QnAData.count {
@@ -218,6 +226,7 @@ struct QuizGameScreen: View {
             return []  // Returnera en tom array om index är ogiltigt
         }
     }
+    
     func goToNextQuestion () {
         if currentQuestionIndex < api.QnAData.count - 1 {
             currentQuestionIndex += 1
@@ -238,8 +247,11 @@ struct QuizGameScreen_Previews: PreviewProvider {
         QuizGameScreen(selectedCategoryNumber: .constant(21), selectedCategoryName: .constant("Sport"), selectedDifficultyInPopup: .constant("Easy"))
     }
 }
+
 enum APIErrors: Error {
     case invalidURL
     case invalidResponse
     case invalidData
 }
+
+

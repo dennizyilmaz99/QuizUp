@@ -1,18 +1,10 @@
-//
-//  LoginScreen.swift
-//  QuizUp
-//
-//  Created by dator on 2023-10-16.
-//
-
 import SwiftUI
 
 struct LoginScreen: View {
     
     @ObservedObject var db: DatabaseConfig
     @State var isNavigating: Bool = false
-    @State var email = ""
-    @State var password = ""
+    @State var showAlert = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -29,20 +21,20 @@ struct LoginScreen: View {
                         .foregroundColor(.white).offset(y: -270)
                     Rectangle()
                         .foregroundColor(.clear)
-                        .frame(width: 351, height: 329)
+                        .frame(width: 351, height: 310)
                         .background(Color("ButtonColor"))
                         .cornerRadius(20)
                         .overlay(
                             VStack (spacing: 25){
                                 // Maybe att textFieldStyle to email
-                                TextField("", text: $email, prompt: Text("E-post").foregroundColor(Color.color5).font(.system(size: 15)))
+                                TextField("", text: $db.email, prompt: Text("E-post").foregroundColor(Color.color5).font(.system(size: 15)))
                                     .padding(8)
                                     .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
                                     .background(Color(.color4))
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
                                 // Maybe change to secureField instead for password
-                                SecureField("", text: $password, prompt: Text("Lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
+                                SecureField("", text: $db.password, prompt: Text("Lösenord").foregroundColor(Color.color5).font(.system(size: 15)))
                                     .padding(8)
                                     .background(RoundedRectangle(cornerRadius: 10).stroke(.purple, lineWidth: 5))
                                     .background(Color(.color4))
@@ -52,12 +44,21 @@ struct LoginScreen: View {
                                     EmptyView()
                                 }
                                 Button(action: {
-                                    if (!email.isEmpty && !password.isEmpty) {
-                                        _ = db.logInUser(email: email, password: password)
-                                        isNavigating = true // Enable the navigation
+                                    if db.validateLogInFields() {
+                                        db.logInUser(email: db.email, password: db.password) { success, message in
+                                            DispatchQueue.main.async {
+                                                if success {
+                                                    isNavigating = true
+                                                } else {
+                                                    isNavigating = false
+                                                    print("Error did not go")
+                                                    db.alertMessage = message
+                                                    showAlert = true
+                                                }
+                                            }
+                                        }
                                     } else {
-                                        print("Error")
-                                        isNavigating = false
+                                        showAlert = true
                                     }
                                 }) {
                                     Rectangle()
@@ -76,7 +77,11 @@ struct LoginScreen: View {
                                 }
                             }.padding(42))
                 }
-            }.navigationBarBackButtonHidden(true).navigationBarItems(leading: CustomBackBtn())
+            }.navigationBarBackButtonHidden(true)
+                .navigationBarItems(leading: CustomBackBtn())
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Fel"), message: Text(db.alertMessage), dismissButton: .default(Text("OK")))
+                }
         }
     }
     struct CustomBackBtn: View {
@@ -93,6 +98,10 @@ struct LoginScreen: View {
                 }
             }
         }
+    }
+    func showAlert(message: String) {
+        showAlert = true
+        db.alertMessage = message
     }
 }
 

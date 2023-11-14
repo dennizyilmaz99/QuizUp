@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		598655752ADFDD6000870AF7 /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598655742ADFDD6000870AF7 /* GameScreen.swift */; };
 		599113332AD9D629009119B9 /* LandingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599113322AD9D629009119B9 /* LandingScreen.swift */; };
-		59D4620E2AF5207500D5A0D1 /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D4620D2AF5207500D5A0D1 /* AccountSettingsView.swift */; };
+		59AA08062B014AD300CD3D01 /* MenuPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AA08052B014AD300CD3D01 /* MenuPopUpView.swift */; };
 		59D7D0A12ADD54E8008DEAD2 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */; };
 		59D7D0A32ADD54FC008DEAD2 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D7D0A22ADD54FC008DEAD2 /* HomeScreen.swift */; };
 		59D7D0AB2ADD6702008DEAD2 /* CutneyPersonalUse-vmOvy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59D7D0AA2ADD6702008DEAD2 /* CutneyPersonalUse-vmOvy.otf */; };
@@ -60,7 +60,7 @@
 /* Begin PBXFileReference section */
 		598655742ADFDD6000870AF7 /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
 		599113322AD9D629009119B9 /* LandingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingScreen.swift; sourceTree = "<group>"; };
-		59D4620D2AF5207500D5A0D1 /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
+		59AA08052B014AD300CD3D01 /* MenuPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPopUpView.swift; sourceTree = "<group>"; };
 		59D7D0A02ADD54E8008DEAD2 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		59D7D0A22ADD54FC008DEAD2 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		59D7D0A52ADD5D89008DEAD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -231,7 +231,7 @@
 				598655742ADFDD6000870AF7 /* GameScreen.swift */,
 				B03A341D2AE57C4300EDFD91 /* PopUpView.swift */,
 				B048D1E82AE9AC830067B111 /* QuizGameScreen.swift */,
-				59D4620D2AF5207500D5A0D1 /* AccountSettingsView.swift */,
+				59AA08052B014AD300CD3D01 /* MenuPopUpView.swift */,
 			);
 			path = Authenticated;
 			sourceTree = "<group>";
@@ -398,9 +398,9 @@
 				B0A27F892AF29F7C00543EC2 /* LeaderboardView.swift in Sources */,
 				B0B3CDFE2ADEBA66008C5CDB /* DatabaseConfig.swift in Sources */,
 				598655752ADFDD6000870AF7 /* GameScreen.swift in Sources */,
+				59AA08062B014AD300CD3D01 /* MenuPopUpView.swift in Sources */,
 				B03A341C2AE56FFF00EDFD91 /* CategoriesData.swift in Sources */,
 				B0A27F812AEFE84100543EC2 /* ContentView.swift in Sources */,
-				59D4620E2AF5207500D5A0D1 /* AccountSettingsView.swift in Sources */,
 				B0AD20FB2AE930BF00B4674E /* TriviaAPI.swift in Sources */,
 				59D7D0AD2ADDB8CA008DEAD2 /* SettingsScreen.swift in Sources */,
 				59EC7DAF2AD6B4F5000C2CFB /* QuizUpApp.swift in Sources */,
