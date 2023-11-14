@@ -20,6 +20,7 @@ class DatabaseConfig: ObservableObject {
     @Published var users: [UserDetails] = []
     @Published var userName: String = ""
     @Published var didFetchData: Bool = false
+    @Published var didFetchHomeData: Bool = false
     @Published var currentUser: User?
     @Published var currentUserData: UserData?
     @Published var historiaValue: Int = 0
@@ -90,7 +91,7 @@ class DatabaseConfig: ObservableObject {
                         if let name = data["name"] as? String {
                             DispatchQueue.main.async {
                                 self.userName = name
-                                self.didFetchData = true
+                                self.didFetchHomeData = true
                             }
                         }
                     }
@@ -300,8 +301,8 @@ class DatabaseConfig: ObservableObject {
             try auth.signOut()
             print("Logged out user")
             DispatchQueue.main.async { [weak self] in
-                self?.didFetchData = false
-                print(self?.didFetchData ?? false)
+                self?.didFetchHomeData = false
+                print(self?.didFetchHomeData ?? false)
             }
             // Återställ eventuella nödvändiga variabler eller tillstånd här
         } catch let signOutError as NSError {

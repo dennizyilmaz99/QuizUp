@@ -37,30 +37,33 @@ struct QuizGameScreen: View {
                     Image("Icon5").resizable().aspectRatio(contentMode:.fit).frame(width: 175, height: 175).padding(.leading, 38)
                     Spacer()
                     Button(action: {
-                        withAnimation(.easeIn){
-                            showMenu = true
-                        }
+                            withAnimation(Animation.easeOut(duration: 0.2)) {
+                                showMenu.toggle()
+                            }
                     }) {
-                        Image("menu-icon").resizable().aspectRatio(contentMode:.fit).frame(width: 30, height: 30).padding(.trailing, 10).foregroundStyle(.white)
+                        Image("menuicon2").resizable().aspectRatio(contentMode:.fit).frame(width: 22, height: 22).padding(.trailing, 10).foregroundStyle(.white)
                     }
-                }
+                }.offset(y: -19)
                 Spacer()
             }.edgesIgnoringSafeArea(.all)
+            VStack {
+                
+            }
             Text(currentQuestionText)
                 .font(.system(size: 23, design:
                         .rounded)).fontWeight(.bold)
                 .foregroundColor(.white)
-                .offset(x: 100, y: -300)
-            
+                .offset(x: 100, y: -245)
             VStack{
                 if !api.QnAData.isEmpty {
                     if let renderQuestion = api.QnAData[currentQuestionIndex].question.removingPercentEncoding {
-                        
-                        Text(renderQuestion)
-                            .font(.system(size: 23, design: .rounded))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding()
+                        VStack {
+                            Text(renderQuestion)
+                                .font(.system(size: 17, design: .rounded))
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .offset(y: -30)
+                        }.frame(maxWidth: 300)
                         
                     } else {
                         Text("Failed to decode question")
@@ -70,13 +73,15 @@ struct QuizGameScreen: View {
                             .offset(y: -100)
                     }
                 } else {
-                    Text("Loading...")
-                        .font(.system(size: 23, design: .rounded))
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .offset(y: -100)
+                    VStack {
+                        Text("Loading...")
+                            .font(.system(size: 23, design: .rounded))
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .offset(y: -100)
+                    }
                 }
-                VStack {
+                VStack (spacing: 20) {
                     ForEach(cachedShuffledAnswers, id: \.self) { shuffledAnswer in
                         Button( action: {
                             if answerSelected == nil {
@@ -103,9 +108,9 @@ struct QuizGameScreen: View {
                         })
                         {
                             Text(shuffledAnswer)
-                                .font(.system(size: 20, design: .rounded))
+                                .font(.system(size: 17, design: .rounded))
                                 .foregroundColor(answerSelected == shuffledAnswer ? .white : .purple)
-                                .frame(width: 300, alignment: .leading)
+                                .frame(width: 225, height: 30, alignment: .leading)
                                 .padding()
                                 .background(
                                     answerSelected == shuffledAnswer.removingPercentEncoding ?
@@ -119,7 +124,7 @@ struct QuizGameScreen: View {
                         .disabled(hasUserAnswered)
                         .disabled(isGameCompleted)
                     }
-                }.padding(20)
+                }.frame(maxWidth: .infinity, maxHeight: 200).padding(20)
                 Button(action: {
                     if hasUserAnswered {
                         answerSelected = nil
@@ -131,16 +136,17 @@ struct QuizGameScreen: View {
                     Text(isGameCompleted ? "Klar" : "Nästa")
                         .font(.system(size: 20, design: .rounded))
                         .foregroundColor(.purple)
-                        .padding(40)
+                        .padding(20)
                         .background(Color.white)
                         .fontWeight(.bold)
                         .cornerRadius(10)
+                        .offset(y: 50)
                 })
                 .disabled(!hasUserAnswered)
                 .onAppear {
                     self.cachedShuffledAnswers = shuffleAnswers()
                 }
-            }
+            }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .alert(isPresented: $isGameCompleted) {
                 Alert(
                     title: Text("Avslutat spel"),
