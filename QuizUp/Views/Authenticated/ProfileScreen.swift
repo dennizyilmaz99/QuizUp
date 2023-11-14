@@ -110,7 +110,7 @@ struct ProfileScreen: View {
                     message: Text("Är du säker att du vill logga ut?"),
                     primaryButton: .default(Text("Ja")) {
                         db.handleLogOut()
-                        db.didFetchData = false
+                        db.didFetchHomeData = false
                     },
                     secondaryButton: .destructive(Text("Avbryt"))
                 )

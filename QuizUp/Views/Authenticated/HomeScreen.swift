@@ -10,7 +10,7 @@ struct HomeScreen: View {
     var body: some View {
         GeometryReader { geometry in
           ZStack {
-              if !db.didFetchData {
+              if !db.didFetchHomeData {
                   LoadingView()
               } else {
                   ZStack {
@@ -64,7 +64,7 @@ struct HomeScreen: View {
                           }) {
                               Rectangle()
                                   .foregroundColor(.clear)
-                                  .frame(width: 270, height: 150)
+                                  .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.2)
                                   .background(Color("ButtonColor"))
                                   .cornerRadius(20)
                                   .shadow(radius: 1)
@@ -96,7 +96,7 @@ struct HomeScreen: View {
         .onAppear(perform: {
             db.fetchCurrentUserDetails()
             db.fetchUsersDetails()
-            print(db.didFetchData)
+            print(db.didFetchHomeData)
         })
     }
 }

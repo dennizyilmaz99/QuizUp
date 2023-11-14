@@ -52,14 +52,14 @@ struct PopUpView: View {
                             .foregroundColor(.white)
                             .fontWeight(.bold)
                             .cornerRadius(10)
-                            .shadow(radius: 10)
+                            .shadow(color: Color.black.opacity(0.2), radius: 10)
                     })
                 }
                 .padding()
                 .background(Color("ButtonColor"))
+                .cornerRadius(20)
                 .frame(width: geometry.size.width * 0.9, height: geometry.size.height * 0.5) // FÖRÄNDRING
                 .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.5) // FÖRÄNDRING
-                .cornerRadius(10)
             }
         }
     }

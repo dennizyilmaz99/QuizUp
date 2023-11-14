@@ -20,6 +20,7 @@ struct GameScreen: View {
     ]
     
     var body: some View {
+        GeometryReader { geometry in
         NavigationView{
             ZStack{
                 LinearGradient(gradient: Gradient(colors: [Color.homeScreenGradientLight, Color.homeScreenGradientDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -30,8 +31,8 @@ struct GameScreen: View {
                             .rounded)).fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)
-                    .offset(y: -300)
-                    VStack(spacing: 40) {
+                    .offset(y: -geometry.size.height * 0.4)
+                VStack(alignment: .center, spacing: 60) {
                         // To render all categories in our array
                         ForEach(categories) { category in
                             Button(action: { // Creates a button for each category
@@ -48,13 +49,15 @@ struct GameScreen: View {
                         }
                     }
                     .padding()
-                    .offset(y: 50)
+                    .offset(x: geometry.size.width * 0.1)
                 
                 if showMyPopup {
                  PopUpView(showMyPopup: $showMyPopup, selectedCategoryName: $selectedCategoryName, selectedCategoryNumber: $selectedCategoryNumber )
-               }
-            }
-        }.navigationBarBackButtonHidden(true).navigationBarItems(leading: CustomBackBtn())
+                    }
+                }
+            }.navigationBarBackButtonHidden(true).navigationBarItems(leading: CustomBackBtn())
+            
+        }
     }
     
    
@@ -80,26 +83,23 @@ struct GameScreen: View {
         }
     }
     
-  
-    
-    struct ButtonView: View {  // Creates all components that represents each category
-        
+    struct ButtonView: View {
         let categorieName: String
-        
         var body: some View {
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: 320, height: 80)
-                    .background(Color("ButtonColor"))
-                    .cornerRadius(20)
-                    .overlay(
-                        Text(categorieName)
-                            .font(.system(size: 23, design: .rounded))
-                            .fontWeight(.bold)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.white)
-                    )
-            
+            GeometryReader { geometry in
+                // Använd storleksinformation från GeometryReader för att anpassa knapparnas storlek
+                VStack {
+                    Text(categorieName)
+                        .font(.system(size: 23, design: .rounded))
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.white)
+                }
+                .frame(width: geometry.size.width * 0.8, height: 80) // Justera bredden här
+                .background(Color("ButtonColor"))
+                .cornerRadius(20)
+            }
+            .frame(height: 60)// Sätt en fast höjd för knapparna
         }
     }
 }
