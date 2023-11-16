@@ -43,17 +43,17 @@ struct QuizGameScreen: View {
                     }) {
                         Image("menuicon2").resizable().aspectRatio(contentMode:.fit).frame(width: 22, height: 22).padding(.trailing, 10).foregroundStyle(.white)
                     }
-                }.offset(y: -19)
+                }.offset(y: -10)
                 Spacer()
             }.edgesIgnoringSafeArea(.all)
             VStack {
                 
             }
             Text(currentQuestionText)
-                .font(.system(size: 23, design:
+                .font(.system(size: 18, design:
                         .rounded)).fontWeight(.bold)
                 .foregroundColor(.white)
-                .offset(x: 100, y: -245)
+                .offset(x: 100, y: -270)
             VStack{
                 if !api.QnAData.isEmpty {
                     if let renderQuestion = api.QnAData[currentQuestionIndex].question.removingPercentEncoding {
@@ -78,7 +78,6 @@ struct QuizGameScreen: View {
                             .font(.system(size: 23, design: .rounded))
                             .fontWeight(.bold)
                             .foregroundColor(.white)
-                            .offset(y: -100)
                     }
                 }
                 VStack (spacing: 20) {
@@ -110,7 +109,7 @@ struct QuizGameScreen: View {
                             Text(shuffledAnswer)
                                 .font(.system(size: 17, design: .rounded))
                                 .foregroundColor(answerSelected == shuffledAnswer ? .white : .purple)
-                                .frame(width: 225, height: 30, alignment: .leading)
+                                .frame(width: 225, height: 20, alignment: .leading)
                                 .padding()
                                 .background(
                                     answerSelected == shuffledAnswer.removingPercentEncoding ?

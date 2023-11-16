@@ -262,33 +262,30 @@ class DatabaseConfig: ObservableObject {
     }
 
     func logInUser(email: String, password: String, completion: @escaping (Bool, String) -> Void) {
-        
         auth.signIn(withEmail: email, password: password) { [weak self] authDataResult, error in
             guard let self = self else { return }
             
             DispatchQueue.main.async {
                 if let error = error as NSError? {
-                    DispatchQueue.main.async {
-                        let errorMessage = error.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
-                                        if errorMessage.contains("INVALID_LOGIN_CREDENTIALS") {
-                                            // Hantera specifikt fel för ogiltiga inloggningsuppgifter
-                                            completion(false, "Inloggningsuppgifterna är ogiltiga. Kontrollera din e-post och lösenord och försök igen.")
-                                            self.alertMessage = "Inloggningsuppgifterna är ogiltiga. Kontrollera din e-post och lösenord och försök igen."
-                                        }
-                        if error.domain == AuthErrorCode.errorDomain && error.code == AuthErrorCode.userNotFound.rawValue {
-                            completion(false, "Användaren existerar inte.")
-                            self.alertMessage = "Användaren existerar inte."
-                        }; if error.domain == AuthErrorCode.errorDomain && error.code == AuthErrorCode.wrongPassword.rawValue || error.code == AuthErrorCode.invalidEmail.rawValue {
-                            completion(false, "Fel e-post eller lösenord. Försök igen.")
-                            self.alertMessage = "Fel lösenord. Försök igen."
-                        } else {
-                            completion(false, "Ett oväntat fel inträffade: \(error.localizedDescription)")
-                            self.alertMessage = "Ett oväntat fel inträffade: \(error.localizedDescription)"
-                            print(error)
+                    let errorMessage: String
+                    if let errorCode = AuthErrorCode.Code(rawValue: error.code) {
+                        switch errorCode {
+                        case .userNotFound:
+                            errorMessage = "Användaren existerar inte."
+                        case .wrongPassword, .invalidEmail:
+                            errorMessage = "Fel e-post eller lösenord. Försök igen."
+                        default:
+                            errorMessage = "Fel e-post eller lösenord. Försök ig"
                         }
+                    } else {
+                        errorMessage = "Fel e-post eller lösenord. Försök igen."
                     }
+
+                    completion(false, errorMessage)
+                    self.alertMessage = errorMessage
                     return
                 }
+
                 if authDataResult != nil {
                     completion(true, "Inloggning lyckades.")
                 }
