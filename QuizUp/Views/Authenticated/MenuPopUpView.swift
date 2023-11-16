@@ -27,37 +27,39 @@ struct MenuPopUpView: View {
                                 Button(action: {
                                     showMenu = false  // Stäng menyn
                                 }) {
-                                    Image(systemName: "xmark").font(.title3).foregroundStyle(.white).padding(.trailing, 30)
+                                    Image(systemName: "xmark").font(.title3).foregroundStyle(.white).padding(.trailing, 20)
                                 }
                             }
-                            Button(action: {
-                                showMenu = false  // Stäng menyn
-                            }) {
-                                Rectangle()
-                                    .frame(width: geometry.size.width * 0.4, height: 50)
-                                    .foregroundStyle(Color("ButtonColor"))
-                                    .cornerRadius(10)
-                                    .shadow(color: Color.black.opacity(0.2), radius: 10)
-                                    .overlay(
-                                        Text("Återuppta spel").foregroundStyle(.white)
-                                    )
-                            }
-                            Button(action: {
-                                withAnimation(.easeOut){
-                                    navigatingToHomeScreen = true
+                            VStack {
+                                Button(action: {
+                                    showMenu = false  // Stäng menyn
+                                }) {
+                                    Rectangle()
+                                        .frame(width: geometry.size.width * 0.4, height: 50)
+                                        .foregroundStyle(Color("ButtonColor"))
+                                        .cornerRadius(10)
+                                        .shadow(color: Color.black.opacity(0.2), radius: 10)
+                                        .overlay(
+                                            Text("Återuppta spel").foregroundStyle(.white)
+                                        )
                                 }
-                                // Sätt flaggan för att navigera till HomeScreen
-                                showMenu = false
-                            }) {
-                                Rectangle()
-                                    .frame(width: geometry.size.width * 0.4, height: 50)
-                                    .foregroundStyle(Color("ButtonColor"))
-                                    .cornerRadius(10)
-                                    .shadow(color: Color.black.opacity(0.2), radius: 10)
-                                    .overlay(
-                                        Text("Avsluta spel").foregroundStyle(.white)
-                                    )
-                            }
+                                Button(action: {
+                                    withAnimation(.easeOut){
+                                        navigatingToHomeScreen = true
+                                    }
+                                    // Sätt flaggan för att navigera till HomeScreen
+                                    showMenu = false
+                                }) {
+                                    Rectangle()
+                                        .frame(width: geometry.size.width * 0.4, height: 50)
+                                        .foregroundStyle(Color("ButtonColor"))
+                                        .cornerRadius(10)
+                                        .shadow(color: Color.black.opacity(0.2), radius: 10)
+                                        .overlay(
+                                            Text("Avsluta spel").foregroundStyle(.white)
+                                        )
+                                }
+                            }.offset(y: -10)
                         }
                     )
             }

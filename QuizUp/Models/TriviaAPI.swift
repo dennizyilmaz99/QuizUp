@@ -42,7 +42,9 @@ class TriviaAPI: ObservableObject {
             
             // uppdatera QnAData med de avkodade trivia frågorna, om det inte lyckades kasta ett felmeddelande
             DispatchQueue.main.sync {
+                print("Fetching data...")
                 self.QnAData = questionResponse.results
+                print("Fetched data: \(QnAData)")
             }
         } catch {
             print("Fel vid avkodning av data från servern.")
